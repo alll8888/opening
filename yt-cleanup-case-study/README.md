@@ -2,7 +2,7 @@
 
 一份人機分工的案例簡報：YouTube 訂閱爆量到 961 個，和 Claude 一起在約 4.5 小時內裁到 273 個。重點不在退了幾個，而在**裁決的介面怎麼一路演化了五次**。
 
-👉 線上觀看：https://alll8888.github.io/yt-cleanup-case-study/
+👉 線上觀看：https://alll8888.github.io/opening/yt-cleanup-case-study/
 
 ## 內容
 
