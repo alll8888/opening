@@ -1,0 +1,266 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>961 → 273｜YouTube 的訂閱大掃除</title>
+<meta name="description" content="一場 YouTube 訂閱清理的人機分工實驗：介面如何演化五次，從 961 個頻道裁到 273 個。">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;900&family=IBM+Plex+Mono:wght@400;500;600&display=swap">
+<style>
+/* Layout: full-screen slides with scroll-snap; black ground, gold used sparingly for the one thing each slide is about */
+:root{
+  --bg:#111111; --panel:#1b1b1b; --fg:#ededed; --muted:#9a9a9a; --line:#2c2c2c;
+  --gold:#E8B200; --gold-soft:#2a2410; --warn:#e5674f;
+  --sans:"Noto Sans TC","PingFang TC","Microsoft JhengHei",system-ui,sans-serif;
+  --mono:"IBM Plex Mono",ui-monospace,Menlo,monospace;
+  color-scheme:dark;
+}
+*{box-sizing:border-box}
+html,body{margin:0;height:100%;background:var(--bg);color:var(--fg);font-family:var(--sans)}
+body{overflow-y:scroll;scroll-snap-type:y proximity}
+.s{min-height:100vh;min-height:100svh;scroll-snap-align:start;display:flex;flex-direction:column;justify-content:center;
+  padding-block:max(56px,env(safe-area-inset-top,0px)) 72px;padding-left:max(24px,env(safe-area-inset-left,0px));padding-right:max(24px,env(safe-area-inset-right,0px));border-bottom:1px solid var(--line)}
+.in{width:100%;max-width:1080px;margin:0 auto;display:grid;gap:22px}
+.k{font-family:var(--mono);font-size:.8rem;letter-spacing:.14em;color:var(--gold);text-transform:uppercase}
+.tag{display:inline-block;font-size:.72rem;letter-spacing:.06em;color:var(--gold);border:1px solid var(--gold);border-radius:999px;padding:2px 10px;margin-left:10px;vertical-align:middle;font-family:var(--sans)}
+h1{font-size:clamp(2.4rem,7vw,5.2rem);font-weight:900;line-height:1.05;margin:0;text-wrap:balance;letter-spacing:-.01em}
+h2{font-size:clamp(1.6rem,3.8vw,2.7rem);font-weight:900;line-height:1.2;margin:0;text-wrap:balance}
+h1 em,h2 em{font-style:normal;color:var(--gold)}
+p{margin:0;font-size:clamp(1rem,1.6vw,1.2rem);line-height:1.75;color:#cfcfcf;max-width:62ch}
+p b{color:var(--fg)}
+.sub{color:var(--muted);font-size:1rem}
+.big{font-family:var(--mono);font-weight:600;font-size:clamp(3.5rem,11vw,8rem);line-height:1;color:var(--gold);font-variant-numeric:tabular-nums}
+.big small{font-size:.35em;color:var(--muted);margin-left:.2em}
+.two{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:40px;align-items:center}
+@media(max-width:760px){.two{grid-template-columns:1fr;gap:24px}}
+.pie{width:100%;max-width:300px;height:auto;display:block}
+.chart{display:grid;grid-template-columns:minmax(160px,300px) minmax(0,1fr);gap:32px;align-items:center}
+@media(max-width:620px){.chart{grid-template-columns:1fr}.pie{max-width:240px;margin:0 auto}}
+.lg{list-style:none;margin:0;padding:0;display:grid;gap:8px;font-size:.95rem}
+.lg li{display:grid;grid-template-columns:14px minmax(0,1fr) auto 64px;gap:10px;align-items:center}
+.lg i{width:14px;height:14px;border-radius:3px}
+.lg b{font-family:var(--mono);font-weight:500;font-variant-numeric:tabular-nums}
+.lg em{font-style:normal;font-family:var(--mono);color:var(--muted);text-align:right;font-variant-numeric:tabular-nums}
+.tbl{overflow-x:auto}
+table{width:100%;border-collapse:collapse;font-size:.95rem;min-width:560px}
+th,td{text-align:left;padding:10px 12px;border-bottom:1px solid var(--line);vertical-align:top}
+th{font-size:.75rem;letter-spacing:.08em;color:var(--muted);font-weight:500}
+td.n{font-family:var(--mono);color:var(--gold);white-space:nowrap}
+tr.hl td{background:var(--gold-soft)}
+.tl{list-style:none;margin:0;padding:0;display:grid;gap:0}
+.tl li{display:grid;grid-template-columns:64px 18px minmax(0,1fr);gap:12px;align-items:start;padding-bottom:12px}
+.tl time{font-family:var(--mono);color:var(--muted);font-size:.9rem;padding-top:2px}
+.tl .dot{width:10px;height:10px;border-radius:50%;background:var(--line);margin-top:8px;justify-self:center}
+.tl li.on .dot{background:var(--gold)}
+.tl span{line-height:1.6}
+.tl li.on span{color:var(--fg);font-weight:700}
+.tl li:not(.on) span{color:#bdbdbd}
+.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,240px),1fr));gap:12px}
+.card{background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:18px;display:grid;gap:8px;align-content:start}
+.card h3{margin:0;font-size:1.05rem}
+.card p{font-size:.95rem;line-height:1.65}
+.card .k{font-size:.72rem}
+.card.g{border-color:var(--gold)}
+.br{display:grid;grid-template-columns:150px minmax(0,1fr) 46px 56px;gap:10px;align-items:center;font-size:.9rem}
+.br .bt{height:10px;background:var(--line);border-radius:5px;overflow:hidden}
+.br .bt i{display:block;height:100%;background:var(--gold)}
+.br b{font-family:var(--mono);text-align:right;font-variant-numeric:tabular-nums}
+.br em{font-style:normal;font-family:var(--mono);color:var(--muted);font-size:.8rem;font-variant-numeric:tabular-nums}
+@media(max-width:560px){.br{grid-template-columns:110px minmax(0,1fr) 40px}.br em{display:none}}
+.chain{display:flex;flex-wrap:wrap;gap:8px 6px;align-items:center;font-family:var(--mono);font-size:clamp(1rem,2.4vw,1.5rem)}
+.chain b{color:var(--fg);font-weight:500}
+.chain i{font-style:normal;color:var(--muted);font-size:.7em}
+.chain b:last-child{color:var(--gold)}
+.chat{display:grid;gap:10px;max-width:640px;margin-block:6px}
+.msg{display:flex}
+.msg span{padding:10px 14px;border-radius:14px;line-height:1.6;font-size:clamp(.95rem,1.5vw,1.05rem);max-width:85%}
+.msg.me{justify-content:flex-end}
+.msg.me span{background:var(--gold);color:#111;border-bottom-right-radius:4px}
+.msg.ai span{background:var(--panel);border:1px solid var(--line);color:#dedede;border-bottom-left-radius:4px}
+.msg.ai b{color:var(--gold)}
+.quote{border-left:4px solid var(--gold);padding:6px 0 6px 18px;font-size:clamp(1.1rem,2.2vw,1.5rem);line-height:1.6;color:var(--fg);max-width:40ch}
+.recipe{counter-reset:r;list-style:none;margin:0;padding:0;display:grid;gap:10px}
+.recipe li{counter-increment:r;display:grid;grid-template-columns:36px minmax(0,1fr);gap:12px;align-items:baseline;font-size:1.05rem;line-height:1.6}
+.recipe li::before{content:counter(r);font-family:var(--mono);color:var(--gold);font-size:1.3rem}
+.pg{position:fixed;right:max(16px,env(safe-area-inset-right,0px));bottom:calc(14px + env(safe-area-inset-bottom,0px));font-family:var(--mono);font-size:.8rem;color:var(--muted);background:rgba(17,17,17,.8);padding:4px 10px;border-radius:6px}
+.foot{font-size:.85rem;color:var(--muted)}
+@media(prefers-reduced-motion:no-preference){html{scroll-behavior:smooth}}
+</style>
+</head>
+<body>
+
+<section class="s" id="s1"><div class="in">
+  <div class="k">Case Study · 2026.10.14–15</div>
+  <h1>961 → <em>273</em></h1>
+  <h2 style="font-weight:500;color:#cfcfcf">一場 YouTube 的訂閱大掃除</h2>
+  <div class="chat">
+    <div class="msg me"><span>你能查閱我所訂閱的 YT 頻道嗎？目前已經爆量，超過我的管理能力</span></div>
+    <div class="msg ai"><span>可以，已經讀到了：你目前訂閱了 <b>961 個頻道</b>。</span></div>
+    <div class="msg me"><span>961！應該已經達到全人類的 1% 了吧</span></div>
+    <div class="msg ai"><span>很可能是，而且應該不只 1%。一般使用者大多只訂幾十個頻道，上百個就算重度；到 961 個，基本上是站在曲線最尾巴那一小撮人裡。探險家的訂閱清單，長得就是一張「什麼都想去看一眼」的地圖。</span></div>
+  </div>
+  <p>訂閱數爆量到超過管理能力。這份紀錄不是在講「退了幾個」，而是在講<b>裁決的介面怎麼一路演化了五次</b>，以及 AI 和人各自該做什麼。</p>
+  <p class="sub">璁導 × Claude｜約 4.5 小時｜退訂 688 個</p>
+</div></section>
+
+<section class="s" id="s2"><div class="in">
+  <div class="k">01 · 起點</div>
+  <h2>961 個訂閱，<em>三成光看名稱根本不知道是什麼</em></h2>
+  <div class="chart"><svg viewBox="0 0 300 300" class="pie" role="img"><path d="M150.00,4.00 A146.0,146.0 0 0 1 287.40,199.36 L229.69,178.63 A84.67999999999999,84.67999999999999 0 0 0 150.00,65.32 Z" fill="#E8B200" stroke="var(--bg)" stroke-width="2"><title>未分類（名稱看不出）：293</title></path><path d="M287.40,199.36 A146.0,146.0 0 0 1 245.10,260.78 L205.16,214.25 A84.67999999999999,84.67999999999999 0 0 0 229.69,178.63 Z" fill="#F4DC8A" stroke="var(--bg)" stroke-width="2"><title>電影・影視解說：79</title></path><path d="M245.10,260.78 A146.0,146.0 0 0 1 191.88,289.86 L174.29,231.12 A84.67999999999999,84.67999999999999 0 0 0 205.16,214.25 Z" fill="#9A9A9A" stroke="var(--bg)" stroke-width="2"><title>音樂：64</title></path><path d="M191.88,289.86 A146.0,146.0 0 0 1 138.08,295.51 L143.09,234.40 A84.67999999999999,84.67999999999999 0 0 0 174.29,231.12 Z" fill="#5E5E5E" stroke="var(--bg)" stroke-width="2"><title>美食・生活・旅行：57</title></path><path d="M138.08,295.51 A146.0,146.0 0 0 1 87.64,282.01 L113.83,226.57 A84.67999999999999,84.67999999999999 0 0 0 143.09,234.40 Z" fill="#C8C8C8" stroke="var(--bg)" stroke-width="2"><title>遊戲：55</title></path><path d="M87.64,282.01 A146.0,146.0 0 0 1 45.17,251.62 L89.20,208.94 A84.67999999999999,84.67999999999999 0 0 0 113.83,226.57 Z" fill="#B8860B" stroke="var(--bg)" stroke-width="2"><title>娛樂・搞笑・綜藝：55</title></path><path d="M45.17,251.62 A146.0,146.0 0 0 1 20.21,216.86 L74.72,188.78 A84.67999999999999,84.67999999999999 0 0 0 89.20,208.94 Z" fill="#3A3A3A" stroke="var(--bg)" stroke-width="2"><title>心理・讀書・成長：45</title></path><path d="M20.21,216.86 A146.0,146.0 0 0 1 150.00,4.00 L150.00,65.32 A84.67999999999999,84.67999999999999 0 0 0 74.72,188.78 Z" fill="#E9E2CF" stroke="var(--bg)" stroke-width="2"><title>其他 12 類：313</title></path></svg><ul class="lg"><li><i style="background:#E8B200"></i><span>未分類（名稱看不出）</span><b>293</b><em>30.5%</em></li><li><i style="background:#F4DC8A"></i><span>電影・影視解說</span><b>79</b><em>8.2%</em></li><li><i style="background:#9A9A9A"></i><span>音樂</span><b>64</b><em>6.7%</em></li><li><i style="background:#5E5E5E"></i><span>美食・生活・旅行</span><b>57</b><em>5.9%</em></li><li><i style="background:#C8C8C8"></i><span>遊戲</span><b>55</b><em>5.7%</em></li><li><i style="background:#B8860B"></i><span>娛樂・搞笑・綜藝</span><b>55</b><em>5.7%</em></li><li><i style="background:#3A3A3A"></i><span>心理・讀書・成長</span><b>45</b><em>4.7%</em></li><li><i style="background:#E9E2CF"></i><span>其他 12 類</span><b>313</b><em>32.6%</em></li></ul></div>
+  <p class="sub">依頻道名稱與簡介初判。293 個無法分類：頻道名稱是很差的分類訊號。</p>
+</div></section>
+
+<section class="s" id="s3"><div class="in">
+  <div class="k">02 · 結果</div>
+  <h2>最後退掉 <em>71.6%</em></h2>
+  <div class="chart"><svg viewBox="0 0 300 300" class="pie" role="img"><path d="M150.00,4.00 A146.0,146.0 0 1 1 7.33,181.02 L67.25,167.99 A84.67999999999999,84.67999999999999 0 1 0 150.00,65.32 Z" fill="#5E5E5E" stroke="var(--bg)" stroke-width="2"><title>退訂：688</title></path><path d="M7.33,181.02 A146.0,146.0 0 0 1 150.00,4.00 L150.00,65.32 A84.67999999999999,84.67999999999999 0 0 0 67.25,167.99 Z" fill="#E8B200" stroke="var(--bg)" stroke-width="2"><title>保留：273</title></path></svg><ul class="lg"><li><i style="background:#5E5E5E"></i><span>退訂</span><b>688</b><em>71.6%</em></li><li><i style="background:#E8B200"></i><span>保留</span><b>273</b><em>28.4%</em></li></ul></div>
+  <p>留下的 273 個裡包含曾經製作過的客戶頻道，所以這份名單是「品味＋作品足跡」的混合，不等於純個人品味。</p>
+</div></section>
+
+<section class="s" id="s4"><div class="in">
+  <div class="k">03 · 五個階段的貢獻</div>
+  <h2>八成的退訂，發生在<em>最後一種介面</em></h2>
+  <div class="chart"><svg viewBox="0 0 300 300" class="pie" role="img"><path d="M150.00,4.00 A146.0,146.0 0 1 1 9.09,111.78 L68.27,127.83 A84.67999999999999,84.67999999999999 0 1 0 150.00,65.32 Z" fill="#E8B200" stroke="var(--bg)" stroke-width="2"><title>⑤ 裁決台・縮圖版：545</title></path><path d="M9.09,111.78 A146.0,146.0 0 0 1 99.09,13.16 L120.47,70.63 A84.67999999999999,84.67999999999999 0 0 0 68.27,127.83 Z" fill="#F4DC8A" stroke="var(--bg)" stroke-width="2"><title>④ 裁決台・文字版：104</title></path><path d="M99.09,13.16 A146.0,146.0 0 0 1 128.74,5.56 L137.67,66.22 A84.67999999999999,84.67999999999999 0 0 0 120.47,70.63 Z" fill="#9A9A9A" stroke="var(--bg)" stroke-width="2"><title>① 規則清理：23</title></path><path d="M128.74,5.56 A146.0,146.0 0 0 1 139.34,4.39 L143.82,65.55 A84.67999999999999,84.67999999999999 0 0 0 137.67,66.22 Z" fill="#5E5E5E" stroke="var(--bg)" stroke-width="2"><title>② 逐題選擇題：8</title></path><path d="M139.34,4.39 A146.0,146.0 0 0 1 150.00,4.00 L150.00,65.32 A84.67999999999999,84.67999999999999 0 0 0 143.82,65.55 Z" fill="#C8C8C8" stroke="var(--bg)" stroke-width="2"><title>③ 逐題＋截圖：8</title></path></svg><ul class="lg"><li><i style="background:#E8B200"></i><span>⑤ 裁決台・縮圖版</span><b>545</b><em>79.2%</em></li><li><i style="background:#F4DC8A"></i><span>④ 裁決台・文字版</span><b>104</b><em>15.1%</em></li><li><i style="background:#9A9A9A"></i><span>① 規則清理</span><b>23</b><em>3.3%</em></li><li><i style="background:#5E5E5E"></i><span>② 逐題選擇題</span><b>8</b><em>1.2%</em></li><li><i style="background:#C8C8C8"></i><span>③ 逐題＋截圖</span><b>8</b><em>1.2%</em></li></ul></div>
+  <p class="sub">688 個退訂依執行階段拆分。另有第 3 批 Word 檔做好了，還沒裁就被裁決台取代。</p>
+</div></section>
+
+<section class="s" id="s5"><div class="in">
+  <div class="k">04 · 時間軸</div>
+  <h2>前兩個半小時在摸索，<em>後兩小時裁完 922 個</em></h2>
+  <ol class="tl">
+    <li><time>20:18</time><i class="dot"></i><span>「你能查閱我訂閱的頻道嗎？已經爆量。」盤點出 961 個</span></li>
+    <li class="on"><time>20:21</time><i class="dot"></i><span>① 下三條規則：新聞台、兒童、大陸搬運號全退 → 23 個</span></li>
+    <li><time>20:45</time><i class="dot"></i><span>「耗時超過預期」，要一份 961 個的分類總表</span></li>
+    <li class="on"><time>21:08</time><i class="dot"></i><span>② 改成 10 個一批的勾選題</span></li>
+    <li class="on"><time>22:21</time><i class="dot"></i><span>③ 加上頻道首頁截圖，再跑一批</span></li>
+    <li><time>22:35</time><i class="dot"></i><span>第 3 批改成 Word 檔（編號／名稱／分類／截圖）</span></li>
+    <li class="on"><time>22:44</time><i class="dot"></i><span>轉折：「一次 922 個做成網頁，勾完丟回給你」</span></li>
+    <li class="on"><time>22:50</time><i class="dot"></i><span>④ 裁決台・文字版上線（最近 3 支標題＋最後上片日）</span></li>
+    <li><time>23:27</time><i class="dot"></i><span>裁到第 210 個，先執行 104 個退訂</span></li>
+    <li class="on"><time>23:41</time><i class="dot"></i><span>⑤ 裁決台・縮圖版上線（最新 3 支影片縮圖）</span></li>
+    <li><time>00:36</time><i class="dot"></i><span>712 個裁完，545 個退訂執行完畢 → 剩 273</span></li>
+  </ol>
+</div></section>
+
+<section class="s" id="s6"><div class="in">
+  <div class="k">05 · 介面演化</div>
+  <h2>每換一次介面，<em>每個判斷的成本</em>就再降一次</h2>
+  <div class="tbl"><table>
+    <thead><tr><th>階段</th><th>介面</th><th>人要做什麼</th><th>量級</th></tr></thead>
+    <tbody>
+      <tr><td class="n">①</td><td>對話下規則</td><td>想出規則</td><td>23 個</td></tr>
+      <tr><td class="n">②</td><td>10 個一批勾選題</td><td>看名稱＋一行說明</td><td>一批來回數分鐘</td></tr>
+      <tr><td class="n">③</td><td>勾選題＋首頁截圖</td><td>看圖再勾</td><td>截圖一頁 6–8 秒</td></tr>
+      <tr><td class="n">④</td><td>一頁網頁・文字</td><td>掃標題、看停更</td><td>210 個／約 37 分</td></tr>
+      <tr class="hl"><td class="n">⑤</td><td>一頁網頁・縮圖</td><td>看縮圖直覺勾</td><td>712 個／約 55 分</td></tr>
+    </tbody>
+  </table></div>
+  <p class="sub">④ 約每分鐘 6 個，⑤ 約每分鐘 13 個。速度翻倍的原因不是更努力，是看的東西換了。</p>
+</div></section>
+
+<section class="s" id="s7"><div class="in">
+  <div class="k">06 · 規則的極限</div>
+  <div class="big">2.4<small>%</small></div>
+  <h2>規則看起來最省力，<em>只碰得到最外圍</em></h2>
+  <p>三條規則清掉 23 個。剩下的 97% 每一個都是品味題，沒有規則寫得出來，只能靠人眼一個一個判斷。AI 能做的是把這 97% 的判斷變得更便宜。</p>
+</div></section>
+
+<section class="s" id="s8"><div class="in">
+  <div class="k">07 · 轉折點</div>
+  <div class="quote">「將這樣的格式擴增為一批 922 個頻道的 html 檔，上面有退訂勾選，我可以直接裁，裁完後再丟回給你。」</div>
+  <h2>介面的跳躍，<em>是人提的</em></h2>
+  <p>AI 一開始給的是「10 個一批選擇題」，這是對話介面的慣性。一次攤開全部的想法來自使用者。AI 的角色是評估可行性、指出卡點（截圖要 1.5–2 小時），再提出替代路線（改抓文字，10 分鐘）。</p>
+</div></section>
+
+<section class="s" id="s9"><div class="in">
+  <div class="k">08 · 訊號的選擇</div>
+  <h2>給判斷用的資訊，要<em>剛好夠</em>，不是越多越好</h2>
+  <div class="cards">
+    <div class="card"><div class="k">首頁截圖</div><h3>看起來最完整</h3><p>一頁 6–8 秒，922 個要 1.5–2 小時，還佔住瀏覽器。實際上人眼只盯著影片縮圖那一塊。</p></div>
+    <div class="card"><div class="k">文字＋最後上片日</div><h3>最快、多了一個訊號</h3><p>10 分鐘抓完。「停更兩年」截圖看不到，文字一眼就看到。但讀標題很花腦。</p></div>
+    <div class="card g"><div class="k">最新 3 支縮圖</div><h3>人眼真正在看的東西</h3><p>直接抓縮圖拼成一條，712 個約 3 分鐘。截圖的效果，文字版的速度。</p></div>
+  </div>
+</div></section>
+
+<section class="s" id="s10"><div class="in">
+  <div class="k">09 · 回饋通道</div>
+  <h2>人只做裁決，<em>搬運全部交出去</em></h2>
+  <div class="two">
+    <div class="card"><div class="k">之前</div><h3>勾選 → 打字貼回對話</h3><p>人變成搬運工，每一批都要來回一次。</p></div>
+    <div class="card g"><div class="k">之後</div><h3>勾選 → 自動存檔 → AI 直接讀</h3><p>網頁把勾選即時存起來，AI 讀到名單就去執行。人只要說一句「裁完了」。</p></div>
+  </div>
+</div></section>
+
+<section class="s" id="s11"><div class="in">
+  <div class="k">10 · 哪些留、哪些全滅<span class="tag">對話中沒提到</span></div>
+  <h2>籃球 29 個<em>全退</em>，影像創作留下過半</h2>
+  <div style="display:grid;gap:8px"><div class="br"><span class="bl">影像創作・導演攝影</span><span class="bt"><i style="width:55%"></i></span><b>55%</b><em>23/42</em></div><div class="br"><span class="bl">電影・影視解說</span><span class="bt"><i style="width:52%"></i></span><b>52%</b><em>41/79</em></div><div class="br"><span class="bl">AI 與生成式工具</span><span class="bt"><i style="width:50%"></i></span><b>50%</b><em>12/24</em></div><div class="br"><span class="bl">撞球</span><span class="bt"><i style="width:50%"></i></span><b>50%</b><em>3/6</em></div><div class="br"><span class="bl">心理・讀書・成長</span><span class="bt"><i style="width:47%"></i></span><b>47%</b><em>21/45</em></div><div class="br"><span class="bl">語言・教育</span><span class="bt"><i style="width:47%"></i></span><b>47%</b><em>7/15</em></div><div class="br"><span class="bl">商業・財經・創業</span><span class="bt"><i style="width:36%"></i></span><b>36%</b><em>14/39</em></div><div class="br"><span class="bl">3C 科技・數位</span><span class="bt"><i style="width:35%"></i></span><b>35%</b><em>14/40</em></div><div class="br"><span class="bl">故事・懸案・奇聞</span><span class="bt"><i style="width:34%"></i></span><b>34%</b><em>11/32</em></div><div class="br"><span class="bl">美食・生活・旅行</span><span class="bt"><i style="width:32%"></i></span><b>32%</b><em>18/57</em></div><div class="br"><span class="bl">音樂</span><span class="bt"><i style="width:31%"></i></span><b>31%</b><em>20/64</em></div><div class="br"><span class="bl">娛樂・搞笑・綜藝</span><span class="bt"><i style="width:24%"></i></span><b>24%</b><em>13/55</em></div><div class="br"><span class="bl">科學・科普</span><span class="bt"><i style="width:24%"></i></span><b>24%</b><em>8/33</em></div><div class="br"><span class="bl">遊戲</span><span class="bt"><i style="width:20%"></i></span><b>20%</b><em>11/55</em></div><div class="br"><span class="bl">健康・醫學・健身</span><span class="bt"><i style="width:8%"></i></span><b>8%</b><em>1/13</em></div><div class="br"><span class="bl">新聞・政治・時事</span><span class="bt"><i style="width:7%"></i></span><b>7%</b><em>2/27</em></div><div class="br"><span class="bl">籃球・運動</span><span class="bt"><i style="width:0%"></i></span><b>0%</b><em>0/29</em></div></div>
+  <p class="sub">各分類的保留率（保留數／原有數）。分類為名稱初判，「未分類」與兒童類未列入。</p>
+</div></section>
+
+<section class="s" id="s12"><div class="in">
+  <div class="k">11 · 活躍度不是留下的理由<span class="tag">對話中沒提到</span></div>
+  <div class="two">
+    <div style="display:grid;gap:12px;justify-items:center;text-align:center"><svg viewBox="0 0 300 300" class="pie" role="img"><path d="M150.00,4.00 A146.0,146.0 0 1 1 48.02,45.52 L90.85,89.40 A84.67999999999999,84.67999999999999 0 1 0 150.00,65.32 Z" fill="#5E5E5E" stroke="var(--bg)" stroke-width="2"><title>退訂：171</title></path><path d="M48.02,45.52 A146.0,146.0 0 0 1 150.00,4.00 L150.00,65.32 A84.67999999999999,84.67999999999999 0 0 0 90.85,89.40 Z" fill="#E8B200" stroke="var(--bg)" stroke-width="2"><title>保留：24</title></path></svg><p><b>停更一年以上或沒影片</b><br><span class="sub">195 個裡退了 171 個（88%）</span></p></div>
+    <div style="display:grid;gap:12px;justify-items:center;text-align:center"><svg viewBox="0 0 300 300" class="pie" role="img"><path d="M150.00,4.00 A146.0,146.0 0 1 1 31.26,234.95 L81.13,199.27 A84.67999999999999,84.67999999999999 0 1 0 150.00,65.32 Z" fill="#5E5E5E" stroke="var(--bg)" stroke-width="2"><title>退訂：448</title></path><path d="M31.26,234.95 A146.0,146.0 0 0 1 150.00,4.00 L150.00,65.32 A84.67999999999999,84.67999999999999 0 0 0 81.13,199.27 Z" fill="#E8B200" stroke="var(--bg)" stroke-width="2"><title>保留：240</title></path></svg><p><b>半年內還有上片</b><br><span class="sub">688 個裡也退了 448 個（65%）</span></p></div>
+  </div>
+  <p>停更是很強的淘汰訊號，但「還在更新」並不讓頻道留下來。真正決定去留的，是現在的自己還在不在乎。</p>
+</div></section>
+
+<section class="s" id="s13"><div class="in">
+  <div class="k">12 · 裁決會變<span class="tag">對話中沒提到</span></div>
+  <h2>同一個頻道，<em>先留、後退</em></h2>
+  <p>在規則清理的灰色區，有一個電影解說頻道被明確指定「留著」。兩個多小時後在縮圖版裁決台上，同一個頻道被勾掉了。</p>
+  <p>裁決不是一次性的真理，會隨著看到的資訊和當下的脈絡改變。所以<b>執行永遠以最新一次裁決為準</b>，而且每一輪都要留下紀錄。</p>
+</div></section>
+
+<section class="s" id="s14"><div class="in">
+  <div class="k">13 · 驗證靠算術<span class="tag">對話中沒提到</span></div>
+  <h2>每一次執行後，<em>重新載入，數字要對得上</em></h2>
+  <div class="chain"><b>961</b><i>−23</i><b>938</b><i>−8</i><b>930</b><i>−8</i><b>922</b><i>−104</i><b>818</b><i>−545</i><b>273</b></div>
+  <p>畫面上按鈕顯示「已退訂」不算數，重新載入整份清單、總數剛好等於「上一輪 − 這一輪」才算數。中間有 18 個頻道就是這樣抓出來的：名稱尾巴藏了一個空格，第一次沒對上。</p>
+</div></section>
+
+<section class="s" id="s15"><div class="in">
+  <div class="k">14 · 踩過的坑</div>
+  <h2>下次做類似任務，<em>這些會再出現</em></h2>
+  <div class="cards">
+    <div class="card"><h3>背景分頁被降速</h3><p>瀏覽器分頁切到背景，計時器被凍結，腳本卡死。改用不受降速影響的等待方式後，104 個不到一分鐘。</p></div>
+    <div class="card"><h3>名稱藏空格</h3><p>確認對話框裡的頻道名稱尾巴多一個空格，比對失敗。比對前一律先正規化。</p></div>
+    <div class="card"><h3>檔案在 A 機，連線在 B 機</h3><p>資料下載到 MacBook Air，對話卻連著 Mac Studio，讀不到。最後靠拖檔上傳解決。</p></div>
+    <div class="card"><h3>截圖裁掉了重點</h3><p>為了露出影片往下捲，結果把頻道橫幅切掉。給人看的畫面，要先問人要看什麼。</p></div>
+  </div>
+</div></section>
+
+<section class="s" id="s16"><div class="in">
+  <div class="k">15 · 可以帶走的模式</div>
+  <h2>「裁決台」：<em>量大、每筆都要人判斷</em>的整理都適用</h2>
+  <ol class="recipe">
+    <li>AI 把全部項目撈出來，配上<b>剛好夠的判斷訊號</b>（縮圖、日期、標題）</li>
+    <li>攤成一頁，人只做一件事：勾</li>
+    <li>勾選自動存檔，AI 直接讀，不用貼回</li>
+    <li>AI 執行，執行後用數字驗證</li>
+    <li>每一輪留下紀錄，裁決可以反悔</li>
+  </ol>
+  <p class="sub">適用場景：電子報訂閱、相簿、待讀清單、素材初篩、選題候選池。</p>
+</div></section>
+
+<section class="s" id="s17"><div class="in">
+  <div class="k">結語</div>
+  <h2>AI 做搬運，<em>人做裁決</em></h2>
+  <p>這場清理最有價值的產出不是少了 688 個頻道，而是確認了一件事：當人的工作被壓縮到只剩「判斷」，判斷本身也會變快、變準。把介面設計好，是把人的注意力還給人。</p>
+  <p class="foot">紀錄：璁導（李孟璁）｜協作：Claude｜2026.10.15</p>
+</div></section>
+
+<div class="pg" id="pg">1 / 17</div>
+<script>
+const S=[...document.querySelectorAll('.s')],pg=document.getElementById('pg');
+const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting)pg.textContent=(S.indexOf(e.target)+1)+' / '+S.length}),{threshold:.5});
+S.forEach(s=>io.observe(s));
+document.addEventListener('keydown',e=>{const i=S.findIndex(s=>Math.abs(s.getBoundingClientRect().top)<innerHeight/2);
+  if(['ArrowDown','PageDown',' ','ArrowRight'].includes(e.key)){e.preventDefault();S[Math.min(i+1,S.length-1)].scrollIntoView()}
+  if(['ArrowUp','PageUp','ArrowLeft'].includes(e.key)){e.preventDefault();S[Math.max(i-1,0)].scrollIntoView()}});
+</script>
+</body>
+</html>
