@@ -1,0 +1,360 @@
+測試 test
+line2<!doctype html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>526 → 489｜UpNote 背包大整理</title>
+<meta name="description" content="Case Study：一場 UpNote 筆記背包大整理的人機分工紀錄，並與 YouTube 961 訂閱大掃除對照。">
+<style>
+:root{
+  --bg:#f6f4ef;--card:#ffffff;--ink:#1d1d1f;--muted:#6c6a66;--line:#e2dfd8;
+  --accent:#b5651d;--accent-bg:#f8ecdf;--me:#2f5d9a;--me-bg:#e8f0fa;
+  --ok:#3e7d4f;--ok-bg:#e7f3ea;--warn:#b3362f;--warn-bg:#fbeae8;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#151517;--card:#202024;--ink:#ededed;--muted:#9b9aa0;--line:#33333a;
+  --accent:#e59a55;--accent-bg:#2f2418;--me:#80a9e2;--me-bg:#1b2533;
+  --ok:#7cc08d;--ok-bg:#1a2a1f;--warn:#ef8a83;--warn-bg:#331f1e;}}
+:root[data-theme="dark"]{
+  --bg:#151517;--card:#202024;--ink:#ededed;--muted:#9b9aa0;--line:#33333a;
+  --accent:#e59a55;--accent-bg:#2f2418;--me:#80a9e2;--me-bg:#1b2533;
+  --ok:#7cc08d;--ok-bg:#1a2a1f;--warn:#ef8a83;--warn-bg:#331f1e;}
+*{box-sizing:border-box}
+html,body{margin:0;height:100%}
+body{background:var(--bg);color:var(--ink);font:16px/1.7 -apple-system,"PingFang TC","Noto Sans TC","Microsoft JhengHei",sans-serif;-webkit-font-smoothing:antialiased}
+main{height:100%;overflow-y:auto;scroll-snap-type:y proximity}
+section{min-height:100%;scroll-snap-align:start;display:flex;flex-direction:column;justify-content:center;padding:56px max(16px,env(safe-area-inset-left)) 72px;max-width:1000px;margin:0 auto}
+.no{font-size:14px;font-weight:700;letter-spacing:.12em;color:var(--accent);margin-bottom:6px}
+h1{font-size:clamp(44px,11vw,104px);line-height:1.05;margin:0 0 12px;font-weight:800;letter-spacing:-.02em}
+h1 em{font-style:normal;color:var(--accent)}
+h2{font-size:clamp(26px,5vw,40px);line-height:1.25;margin:0 0 18px}
+h2 em{font-style:normal;color:var(--accent)}
+p{margin:0 0 12px}
+.lead{font-size:clamp(18px,3vw,22px);color:var(--muted)}
+.muted{color:var(--muted)}
+small{font-size:13px}
+.grid{display:grid;gap:12px}
+.g2{grid-template-columns:repeat(auto-fit,minmax(240px,1fr))}
+.g3{grid-template-columns:repeat(auto-fit,minmax(180px,1fr))}
+.g4{grid-template-columns:repeat(auto-fit,minmax(150px,1fr))}
+.card{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:16px}
+.card b{display:block}
+.big{font-size:clamp(30px,5vw,44px);font-weight:800;line-height:1.1;font-variant-numeric:tabular-nums}
+.big.a{color:var(--accent)}
+.chat{display:flex;flex-direction:column;gap:10px;max-width:640px}
+.bubble{padding:12px 16px;border-radius:14px;background:var(--card);border:1px solid var(--line)}
+.bubble.u{align-self:flex-end;background:var(--accent-bg);border-color:transparent}
+.bubble .who{font-size:12px;font-weight:700;color:var(--muted);display:block;margin-bottom:2px}
+table{width:100%;border-collapse:collapse;background:var(--card);border:1px solid var(--line);border-radius:12px;overflow:hidden;font-size:15px}
+th,td{padding:9px 12px;border-bottom:1px solid var(--line);text-align:left;vertical-align:top}
+th{font-size:13px;color:var(--muted);font-weight:700}
+td.n{text-align:right;font-variant-numeric:tabular-nums;white-space:nowrap}
+tr:last-child td{border-bottom:0}
+.bar{display:flex;align-items:center;gap:10px;margin:6px 0}
+.bar .lab{width:140px;flex:none;font-size:14px}
+.bar .tr{flex:1;height:14px;background:var(--line);border-radius:7px;overflow:hidden}
+.bar .fill{height:100%;background:var(--accent);border-radius:7px}
+.bar .v{width:40px;text-align:right;font-variant-numeric:tabular-nums;font-size:14px}
+.chain{display:flex;flex-wrap:wrap;align-items:center;gap:6px;font-variant-numeric:tabular-nums}
+.chain span{background:var(--card);border:1px solid var(--line);border-radius:8px;padding:6px 10px;font-weight:700}
+.chain i{font-style:normal;color:var(--muted);font-size:13px}
+.chain span.end{background:var(--accent);color:#fff;border-color:transparent}
+/* flow */
+.lanes-head,.phase{display:grid;grid-template-columns:96px 1fr 1fr;gap:10px}
+.lanes-head{font-size:13px;font-weight:700;color:var(--muted);padding-bottom:6px}
+.lanes-head .y{color:var(--accent)}.lanes-head .m{color:var(--me)}
+.phase{padding:10px 0;border-top:1px solid var(--line)}
+.ph{font-weight:700;color:var(--ok);font-size:15px}
+.lane{display:flex;flex-direction:column;gap:6px}
+.step{background:var(--card);border:1px solid var(--line);border-left:4px solid var(--accent);border-radius:8px;padding:8px 10px;font-size:14px;line-height:1.5}
+.lane.m .step{border-left-color:var(--me)}
+.step b{display:block}.step small{color:var(--muted);display:block}
+.gate{grid-column:2 / 4;background:var(--ok-bg);color:var(--ok);border-radius:8px;padding:6px 10px;font-weight:600;font-size:14px}
+.lesson{grid-column:2 / 4;background:var(--warn-bg);border-left:4px solid var(--warn);border-radius:8px;padding:6px 10px;font-size:14px}
+.lesson b{color:var(--warn)}
+.tag{display:inline-block;font-size:12px;font-weight:700;padding:2px 8px;border-radius:999px;background:var(--accent-bg);color:var(--accent);margin-right:6px}
+.tag.me{background:var(--me-bg);color:var(--me)}
+.tag.warn{background:var(--warn-bg);color:var(--warn)}
+.tag.ok{background:var(--ok-bg);color:var(--ok)}
+ol.steps{padding-left:22px;margin:0}
+ol.steps li{margin-bottom:8px}
+blockquote{margin:0;padding:16px 20px;border-left:4px solid var(--accent);background:var(--card);border-radius:0 12px 12px 0;font-size:clamp(20px,3.6vw,28px);font-weight:700;line-height:1.45}
+.foot{margin-top:28px;font-size:13px;color:var(--muted)}
+.counter{position:fixed;right:16px;bottom:14px;font-size:13px;color:var(--muted);background:var(--card);border:1px solid var(--line);border-radius:999px;padding:4px 12px;font-variant-numeric:tabular-nums;z-index:5}
+@media (max-width:640px){
+  .lanes-head{display:none}
+  .phase{grid-template-columns:1fr}
+  .gate,.lesson{grid-column:1}
+  .lane::before{font-size:12px;font-weight:700}
+  .lane.y::before{content:"璁導";color:var(--accent)}
+  .lane.m::before{content:"Claude";color:var(--me)}
+  .bar .lab{width:104px}
+  table{font-size:14px}th,td{padding:8px}
+}
+</style>
+</head>
+<body>
+<main id="deck">
+
+<!-- 1 封面 -->
+<section>
+  <div class="no">CASE STUDY｜2026.10.17–18</div>
+  <h1>526 → <em>489</em></h1>
+  <p class="lead">一場 UpNote 筆記背包的大整理</p>
+  <p class="muted">526 篇陳年筆記，重新歸成 13 本＋1 本機敏隔離區。原話一字未改，建立日期全數保留。</p>
+  <p class="foot">璁導 × Claude｜姊妹篇：<a href="../yt-cleanup-case-study/" style="color:var(--accent)">961 → 273｜YouTube 的訂閱大掃除</a></p>
+</section>
+
+<!-- 2 開場 -->
+<section>
+  <div class="no">開場</div>
+  <h2>「這件事應該一年只做一次。」</h2>
+  <div class="chat">
+    <div class="bubble u"><span class="who">璁導</span>我會匯出 526 個一次做，會有什麼需要考量的嗎？</div>
+    <div class="bubble"><span class="who">Claude</span>最大的風險不是篇數，是裡面混著帳號、證件、財務。這些內文我不該讀。</div>
+    <div class="bubble u"><span class="who">璁導</span>我不想花精神篩選。如果你讀取的時候發現有帳密機敏資料，就 skip，後面接著做。</div>
+  </div>
+  <p class="muted" style="margin-top:16px">跟 YT 大掃除最大的不同就在這裡：這次的背包裡，<b>有 AI 不能看的區域</b>。</p>
+</section>
+
+<!-- 3 起點 -->
+<section>
+  <div class="no">01　起點</div>
+  <h2>一個什麼都往裡塞的背包</h2>
+  <div class="grid g4">
+    <div class="card"><small class="muted">匯出</small><div class="big">526</div><small>篇 Markdown</small></div>
+    <div class="card"><small class="muted">舊筆記本</small><div class="big">23</div><small>本，分類互相重疊</small></div>
+    <div class="card"><small class="muted">沒進筆記本</small><div class="big">97</div><small>篇散落各處</small></div>
+    <div class="card"><small class="muted">含機敏</small><div class="big a">80</div><small>篇，分散在各本</small></div>
+  </div>
+  <p class="muted" style="margin-top:16px">機敏筆記不集中在一處，而是混在電影、課程、客戶案裡。所以只要動到分類，就得先處理隱私。</p>
+</section>
+
+<!-- 4 結果 -->
+<section>
+  <div class="no">02　結果</div>
+  <h2>不是砍掉，是<em>重新歸位</em></h2>
+  <div class="grid g3">
+    <div class="card"><small class="muted">新版筆記</small><div class="big a">409</div><small>篇，分成 13 本</small></div>
+    <div class="card"><small class="muted">機敏隔離</small><div class="big">80</div><small>篇，集中成 1 本</small></div>
+    <div class="card"><small class="muted">原話遺失</small><div class="big">0</div><small>字元（逐篇比對）</small></div>
+  </div>
+  <div class="grid g3" style="margin-top:12px">
+    <div class="card"><b>合併 20 組重複</b><small class="muted">444 → 409</small></div>
+    <div class="card"><b>標題全面正規化</b><small class="muted">英數與中文之間不留空白，搜「AI成果」才找得到</small></div>
+    <div class="card"><b>建立日期全保留</b><small class="muted">最早的筆記回到原本的年份</small></div>
+  </div>
+</section>
+
+<!-- 5 分布 -->
+<section>
+  <div class="no">03　13 本＋機敏</div>
+  <h2>新背包長這樣</h2>
+  <div>
+    <div class="bar"><span class="lab">機敏（隔離）</span><span class="tr"><span class="fill" style="width:100%;background:var(--warn)"></span></span><span class="v">80</span></div>
+    <div class="bar"><span class="lab">電影摘</span><span class="tr"><span class="fill" style="width:86%"></span></span><span class="v">69</span></div>
+    <div class="bar"><span class="lab">AI手藝</span><span class="tr"><span class="fill" style="width:60%"></span></span><span class="v">48</span></div>
+    <div class="bar"><span class="lab">人設與知識經紀</span><span class="tr"><span class="fill" style="width:59%"></span></span><span class="v">47</span></div>
+    <div class="bar"><span class="lab">發光映像｜客戶案</span><span class="tr"><span class="fill" style="width:59%"></span></span><span class="v">47</span></div>
+    <div class="bar"><span class="lab">思想與信仰</span><span class="tr"><span class="fill" style="width:49%"></span></span><span class="v">39</span></div>
+    <div class="bar"><span class="lab">課程與演講</span><span class="tr"><span class="fill" style="width:48%"></span></span><span class="v">38</span></div>
+    <div class="bar"><span class="lab">個人</span><span class="tr"><span class="fill" style="width:43%"></span></span><span class="v">34</span></div>
+    <div class="bar"><span class="lab">影音手藝</span><span class="tr"><span class="fill" style="width:29%"></span></span><span class="v">23</span></div>
+    <div class="bar"><span class="lab">故事手藝</span><span class="tr"><span class="fill" style="width:25%"></span></span><span class="v">20</span></div>
+    <div class="bar"><span class="lab">美食摘</span><span class="tr"><span class="fill" style="width:21%"></span></span><span class="v">17</span></div>
+    <div class="bar"><span class="lab">工具與數位</span><span class="tr"><span class="fill" style="width:18%"></span></span><span class="v">14</span></div>
+    <div class="bar"><span class="lab">音樂摘</span><span class="tr"><span class="fill" style="width:13%"></span></span><span class="v">10</span></div>
+    <div class="bar"><span class="lab">Podcast</span><span class="tr"><span class="fill" style="width:4%"></span></span><span class="v">3</span></div>
+  </div>
+  <p class="muted" style="margin-top:12px"><small>「摘」是收藏別人的作品，「手藝」是自己的功夫。新命名也順便避開舊筆記本，不會鬧雙胞。</small></p>
+</section>
+
+<!-- 6 流程 A–C -->
+<section>
+  <div class="no">04　流程分工（上）</div>
+  <h2>誰做什麼：匯出 → 試跑 → 整理</h2>
+  <div class="lanes-head"><div>階段</div><div class="y">璁導</div><div class="m">Claude</div></div>
+  <div class="phase">
+    <div class="ph">A 匯出與篩檢</div>
+    <div class="lane y"><div class="step"><b>整包匯出 526 篇</b></div><div class="step"><b>裁決：不手動篩機敏</b><small>交給機器先篩，Claude 不讀被篩掉的內文</small></div></div>
+    <div class="lane m"><div class="step"><b>兩輪機器篩</b><small>關鍵字＋帳密樣式，先隔離 75 篇</small></div></div>
+    <div class="lesson"><b>修正：</b>有一篇帳密沒寫「密碼」兩字，第一輪漏網，是璁導看截圖抓到的。</div>
+  </div>
+  <div class="phase">
+    <div class="ph">B 試跑</div>
+    <div class="lane y"><div class="step"><b>試匯 3 篇、再試 2 篇</b><small>回報日期、筆記本、圖片</small></div></div>
+    <div class="lane m"><div class="step"><b>挖出 UpNote 兩個機制</b><small>建立日期讀「檔案時間」；匯入不會自動分本</small></div></div>
+    <div class="gate">✅ 日期、圖片都通過</div>
+  </div>
+  <div class="phase">
+    <div class="ph">C 分類整理</div>
+    <div class="lane y"><div class="step"><b>批次裁決</b><small>重建 13 本／標題正規化／合併重複／命名</small></div><div class="step"><b>抓到分類偏差</b><small>2 篇 AI 筆記被放進 Podcast</small></div></div>
+    <div class="lane m"><div class="step"><b>兩輪讀內文重判</b><small>改分類 16 篇，再抓到漏網機敏 5 篇</small></div><div class="step"><b>產出 409 篇、拆 13 個資料夾</b></div></div>
+    <div class="lesson"><b>修正：</b>第一版有 340 篇只看標題＋照搬舊筆記本，沒有讀內文。</div>
+  </div>
+</section>
+
+<!-- 7 流程 D–F -->
+<section>
+  <div class="no">05　流程分工（下）</div>
+  <h2>誰做什麼：匯入 → 清舊 → 結案</h2>
+  <div class="lanes-head"><div>階段</div><div class="y">璁導</div><div class="m">Claude</div></div>
+  <div class="phase">
+    <div class="ph">D 匯入</div>
+    <div class="lane y"><div class="step"><b>授權代理一次跑完</b><small>人去做家事</small></div><div class="step"><b>機敏一次全匯</b><small>80 篇進「機敏」，之後再慢慢挑回</small></div></div>
+    <div class="lane m"><div class="step"><b>代理操作 Mac 匯入 13 本</b><small>建本 → 匯入 → 指定筆記本 → 選資料夾</small></div><div class="step"><b>備妥機敏匯入包</b><small>80 篇＋37 個附件</small></div></div>
+    <div class="gate">✅ 13 輪全數 N/N｜524 → 933 → 1013</div>
+  </div>
+  <div class="phase">
+    <div class="ph">E 清舊版</div>
+    <div class="lane y"><div class="step"><b>刪 23 本舊筆記本</b><small>連同筆記移到垃圾桶</small></div></div>
+    <div class="lane m"><div class="step"><b>用「未分類」篩選</b><small>一次挑出 97 篇舊散篇，移到垃圾桶</small></div></div>
+    <div class="gate">✅ 1013 → 586 → 489</div>
+  </div>
+  <div class="phase">
+    <div class="ph">F 結案</div>
+    <div class="lane y"><div class="step"><b>清空垃圾桶、慢慢挑回機敏</b><small>這兩件只有本人能做</small></div></div>
+    <div class="lane m"><div class="step"><b>下載區只留原始 526 篇</b><small>其餘移到待刪資料夾，戰情看板結案</small></div></div>
+  </div>
+</section>
+
+<!-- 8 隱私邊界 -->
+<section>
+  <div class="no">06　隱私邊界</div>
+  <h2>AI 不能看的地方，<em>人是最後一道篩</em></h2>
+  <div class="grid g3">
+    <div class="card"><span class="tag me">機器篩</span><div class="big">75</div><small>關鍵字＋帳密樣式，兩輪</small></div>
+    <div class="card"><span class="tag warn">人眼補抓</span><div class="big">1</div><small>璁導看截圖發現，觸發第二輪</small></div>
+    <div class="card"><span class="tag ok">讀內文補抓</span><div class="big">5</div><small>串流帳號、銀行聯絡人、金流後台等</small></div>
+  </div>
+  <p style="margin-top:16px">機器擋下了 94%，但漏掉的 6% 恰恰是最危險的：帳密不會乖乖寫上「密碼」兩個字。</p>
+  <p class="muted">處理方式是只隔離、不複述：被篩掉的筆記，Claude 只看標題做判斷，對話裡也從不重複出現任何帳密。</p>
+</section>
+
+<!-- 9 分類漂移 -->
+<section>
+  <div class="no">07　分類會漂移</div>
+  <h2>只看標題分類，<em>錯得很自信</em></h2>
+  <div class="chat">
+    <div class="bubble u"><span class="who">璁導</span>你看一下第一則的分類就很奇怪，這則應該是 AI手藝。</div>
+    <div class="bubble u"><span class="who">璁導</span>第二則也應該屬於人設那個分類，跟 Podcast 沒有任何一點關係。</div>
+  </div>
+  <p style="margin-top:16px">原因是：有舊筆記本的 340 篇，Claude 只看標題、照搬了舊分類。舊分類本身就是亂的，照搬等於把亂延續下去。</p>
+  <div class="grid g3">
+    <div class="card"><b>第一輪重讀</b><small class="muted">逐篇讀內文，對齊 13 本定義</small></div>
+    <div class="card"><b>第二輪重讀</b><small class="muted">只看邊界案例</small></div>
+    <div class="card"><b>改了 16 篇</b><small class="muted">順手又抓出 5 篇機敏</small></div>
+  </div>
+</section>
+
+<!-- 10 軟體機制 -->
+<section>
+  <div class="no">08　試跑挖出的機制</div>
+  <h2>文件沒寫的，<em>靠試匯 5 篇</em>挖出來</h2>
+  <table>
+    <tr><th>以為</th><th>實際上</th><th>解法</th></tr>
+    <tr><td>建立日期讀筆記裡的欄位</td><td>讀<b>檔案時間</b></td><td>匯入前把每篇的檔案時間改成原本的建立日期（台北時間）</td></tr>
+    <tr><td>資料夾會自動變筆記本</td><td>不會分本，而且這個選項每次都會重設</td><td>一本一本匯入，用「Add to notebook」指定</td></tr>
+    <tr><td>舊筆記只能一本一本找</td><td>有「未分類」篩選</td><td>97 篇散篇一次選取</td></tr>
+    <tr><td>中英之間加空白比較好讀</td><td>璁導搜「AI成果」會搜不到</td><td>所有標題拿掉中英之間的空白</td></tr>
+  </table>
+  <p class="muted" style="margin-top:12px">試跑只花了 5 篇的成本，就換到整個 409 篇不用重來。</p>
+</section>
+
+<!-- 11 算術 -->
+<section>
+  <div class="no">09　驗證靠算術</div>
+  <h2>每一步都要對得上總數</h2>
+  <div class="chain">
+    <span>526</span><i>−2 空</i><span>524</span><i>＋409 新版</i><span>933</span><i>＋80 機敏</i><span>1013</span><i>−427 舊本</i><span>586</span><i>−97 散篇</i><span class="end">489</span>
+  </div>
+  <div class="grid g2" style="margin-top:18px">
+    <div class="card"><b>字元比對</b><small class="muted">新版與原文逐篇比對字元，排版有改、原話 0 遺失</small></div>
+    <div class="card"><b>每本 N/N</b><small class="muted">每匯一本就比對資料夾篇數和筆記本篇數</small></div>
+  </div>
+  <p class="muted" style="margin-top:12px">跟 YT 一樣：數字對不上就停，先找原因。</p>
+</section>
+
+<!-- 12 對照 -->
+<section>
+  <div class="no">10　兩案對照</div>
+  <h2>YT 大掃除 vs. UpNote 背包</h2>
+  <table>
+    <tr><th></th><th>YT 訂閱</th><th>UpNote 背包</th></tr>
+    <tr><td>規模</td><td>961 → 273</td><td>526 → 489</td></tr>
+    <tr><td>動作</td><td><b>砍</b>：退訂 71.6%</td><td><b>歸位</b>：重建 13 本、合併、改名</td></tr>
+    <tr><td>規則的貢獻</td><td>只清 2.4%</td><td>機敏篩到 94%，但漏的最危險</td></tr>
+    <tr><td>人要做的</td><td>922 個品味勾選</td><td>十幾個方向裁決＋抽查</td></tr>
+    <tr><td>AI 能看內容嗎</td><td>全都能看</td><td><b>有禁區</b>：機敏不讀</td></tr>
+    <tr><td>執行</td><td>AI 代理在瀏覽器退訂</td><td>AI 代理操作 Mac 匯入</td></tr>
+    <tr><td>最大的坑</td><td>名稱尾端空白漏了 18 個</td><td>只看標題分類、篩檢漏網</td></tr>
+  </table>
+</section>
+
+<!-- 13 差異 -->
+<section>
+  <div class="no">11　為什麼人做的事變少了</div>
+  <h2>裁決的是<em>規則</em>，不是每一篇</h2>
+  <div class="grid g2">
+    <div class="card"><span class="tag">YT</span><p style="margin-top:8px">留不留是<b>品味題</b>，每個頻道都得人看一眼。介面再快，人還是要點 922 下。</p></div>
+    <div class="card"><span class="tag me">UpNote</span><p style="margin-top:8px">放哪一本是<b>定義題</b>。人只要先定好 13 本各收什麼，AI 就能逐篇套用，人負責抽查。</p></div>
+  </div>
+  <p style="margin-top:16px">代價是：定義題一旦交給 AI 套，就會出現「看起來合理、其實放錯」的漂移，所以<b>抽查不能省</b>。</p>
+</section>
+
+<!-- 14 坑 -->
+<section>
+  <div class="no">12　踩過的坑</div>
+  <h2>下次可以少走的路</h2>
+  <div class="grid g2">
+    <div class="card"><b>建立日期被洗掉</b><small class="muted">第一次試匯全變成今天，改檔案時間才解決</small></div>
+    <div class="card"><b>匯入後全擠在一起</b><small class="muted">「資料夾轉筆記本」每次都自動重設，改成逐本指定</small></div>
+    <div class="card"><b>選檔視窗卡住</b><small class="muted">直接輸入路徑不穩，改成退回上層再點資料夾</small></div>
+    <div class="card"><b>代理權限 30 分鐘就過期</b><small class="muted">長任務中途要重新授權</small></div>
+    <div class="card"><b>舊分類照搬</b><small class="muted">亂的分類照搬，等於把亂延續下去</small></div>
+    <div class="card"><b>機敏篩不乾淨</b><small class="muted">關鍵字抓不到「不像帳密的帳密」</small></div>
+  </div>
+</section>
+
+<!-- 15 模式 -->
+<section>
+  <div class="no">13　可以帶走的模式</div>
+  <h2>裁決台＋<em>隔離區</em></h2>
+  <p class="muted">在 YT 案的「裁決台」五步驟前面，多加一步：</p>
+  <ol class="steps">
+    <li><span class="tag warn">新</span><b>先隔離：</b>機器篩＋人眼抽查，AI 不能看的東西先移出去，只看標題、不讀內文</li>
+    <li><b>撈出項目：</b>整包匯出</li>
+    <li><b>先試跑：</b>用 5 篇換到軟體的真實規則</li>
+    <li><b>人定規則，AI 套用：</b>人裁定義，AI 逐篇套，人抽查漂移</li>
+    <li><b>代理執行：</b>每一步都用總數驗收</li>
+    <li><b>留紀錄、可反悔：</b>原始檔全留，舊版進垃圾桶，不直接刪</li>
+  </ol>
+  <p class="muted" style="margin-top:12px">適用：雲端硬碟、相簿、信箱標籤、Notion 舊頁面，凡是混著私密資料的大整理。</p>
+</section>
+
+<!-- 16 結語 -->
+<section>
+  <div class="no">結語</div>
+  <blockquote>AI 做搬運，人做裁決。<br>AI 看不到的地方，人當最後一道篩。</blockquote>
+  <p class="foot">紀錄：璁導（李孟璁）｜協作：Claude｜2026.10.18<br>姊妹篇：<a href="../yt-cleanup-case-study/" style="color:var(--accent)">961 → 273｜YouTube 的訂閱大掃除</a></p>
+</section>
+
+</main>
+<div class="counter" id="ct">1 / 16</div>
+<script>
+(function(){
+  var deck=document.getElementById('deck'),secs=[].slice.call(deck.querySelectorAll('section')),ct=document.getElementById('ct'),cur=0;
+  function show(){ct.textContent=(cur+1)+' / '+secs.length;}
+  var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting&&e.intersectionRatio>0.5){cur=secs.indexOf(e.target);show();}});},{root:deck,threshold:[0.5]});
+  secs.forEach(function(s){io.observe(s);});
+  function go(i){i=Math.max(0,Math.min(secs.length-1,i));secs[i].scrollIntoView({behavior:'smooth'});}
+  document.addEventListener('keydown',function(e){
+    if(['ArrowRight','PageDown',' '].indexOf(e.key)>-1){e.preventDefault();go(cur+1);}
+    else if(['ArrowLeft','PageUp'].indexOf(e.key)>-1){e.preventDefault();go(cur-1);}
+  });
+  show();
+})();
+</script>
+</body>
+</html>
