@@ -5,32 +5,29 @@
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <title>526 → 489｜UpNote 背包大整理</title>
 <meta name="description" content="Case Study：一場 UpNote 筆記背包大整理的人機分工紀錄，並與 YouTube 961 訂閱大掃除對照。">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;900&family=IBM+Plex+Mono:wght@400;500;600&display=swap">
 <style>
 :root{
-  --bg:#f6f4ef;--card:#ffffff;--ink:#1d1d1f;--muted:#6c6a66;--line:#e2dfd8;
-  --accent:#b5651d;--accent-bg:#f8ecdf;--me:#2f5d9a;--me-bg:#e8f0fa;
-  --ok:#3e7d4f;--ok-bg:#e7f3ea;--warn:#b3362f;--warn-bg:#fbeae8;
+  --bg:#111111;--card:#1b1b1b;--ink:#ededed;--muted:#9a9a9a;--line:#2c2c2c;
+  --accent:#E8B200;--accent-bg:#2a2410;--me:#7fb0ff;--me-bg:#16202e;
+  --ok:#6fcf8a;--ok-bg:#15261b;--warn:#e5674f;--warn-bg:#2e1814;
+  --sans:"Noto Sans TC","PingFang TC","Microsoft JhengHei",system-ui,sans-serif;
+  --mono:"IBM Plex Mono",ui-monospace,Menlo,monospace;
+  color-scheme:dark;
 }
-@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
-  --bg:#151517;--card:#202024;--ink:#ededed;--muted:#9b9aa0;--line:#33333a;
-  --accent:#e59a55;--accent-bg:#2f2418;--me:#80a9e2;--me-bg:#1b2533;
-  --ok:#7cc08d;--ok-bg:#1a2a1f;--warn:#ef8a83;--warn-bg:#331f1e;}}
-:root[data-theme="dark"]{
-  --bg:#151517;--card:#202024;--ink:#ededed;--muted:#9b9aa0;--line:#33333a;
-  --accent:#e59a55;--accent-bg:#2f2418;--me:#80a9e2;--me-bg:#1b2533;
-  --ok:#7cc08d;--ok-bg:#1a2a1f;--warn:#ef8a83;--warn-bg:#331f1e;}
 *{box-sizing:border-box}
 html,body{margin:0;height:100%}
-body{background:var(--bg);color:var(--ink);font:16px/1.7 -apple-system,"PingFang TC","Noto Sans TC","Microsoft JhengHei",sans-serif;-webkit-font-smoothing:antialiased}
+body{background:var(--bg);color:var(--ink);font:16px/1.75 var(--sans);-webkit-font-smoothing:antialiased}
 main{height:100%;overflow-y:auto;scroll-snap-type:y proximity}
 section{min-height:100%;scroll-snap-align:start;display:flex;flex-direction:column;justify-content:center;padding:56px max(16px,env(safe-area-inset-left)) 72px;max-width:1000px;margin:0 auto}
-.no{font-size:14px;font-weight:700;letter-spacing:.12em;color:var(--accent);margin-bottom:6px}
-h1{font-size:clamp(44px,11vw,104px);line-height:1.05;margin:0 0 12px;font-weight:800;letter-spacing:-.02em}
+.no{font-family:var(--mono);font-size:13px;font-weight:500;letter-spacing:.14em;color:var(--accent);margin-bottom:10px;text-transform:uppercase}
+h1{font-family:var(--sans);font-size:clamp(64px,15vw,150px);line-height:1;margin:0 0 14px;font-weight:900;letter-spacing:-.02em;color:var(--ink)}
 h1 em{font-style:normal;color:var(--accent)}
-h2{font-size:clamp(26px,5vw,40px);line-height:1.25;margin:0 0 18px}
+h2{font-size:clamp(28px,5vw,44px);line-height:1.2;margin:0 0 18px;font-weight:900}
 h2 em{font-style:normal;color:var(--accent)}
 p{margin:0 0 12px}
-.lead{font-size:clamp(18px,3vw,22px);color:var(--muted)}
+.lead{font-size:clamp(26px,5vw,46px);font-weight:500;color:#cfcfcf;line-height:1.2;margin-bottom:18px}
 .muted{color:var(--muted)}
 small{font-size:13px}
 .grid{display:grid;gap:12px}
@@ -39,11 +36,13 @@ small{font-size:13px}
 .g4{grid-template-columns:repeat(auto-fit,minmax(150px,1fr))}
 .card{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:16px}
 .card b{display:block}
-.big{font-size:clamp(30px,5vw,44px);font-weight:800;line-height:1.1;font-variant-numeric:tabular-nums}
+.big{font-family:var(--mono);font-size:clamp(36px,6vw,58px);font-weight:600;line-height:1.1;font-variant-numeric:tabular-nums}
 .big.a{color:var(--accent)}
 .chat{display:flex;flex-direction:column;gap:10px;max-width:640px}
 .bubble{padding:12px 16px;border-radius:14px;background:var(--card);border:1px solid var(--line)}
-.bubble.u{align-self:flex-end;background:var(--accent-bg);border-color:transparent}
+.bubble.u{align-self:flex-end;background:var(--accent);color:#111;border-color:transparent;border-bottom-right-radius:4px}
+.bubble.u .who{color:#5a4600}
+.bubble:not(.u){border-bottom-left-radius:4px}
 .bubble .who{font-size:12px;font-weight:700;color:var(--muted);display:block;margin-bottom:2px}
 table{width:100%;border-collapse:collapse;background:var(--card);border:1px solid var(--line);border-radius:12px;overflow:hidden;font-size:15px}
 th,td{padding:9px 12px;border-bottom:1px solid var(--line);text-align:left;vertical-align:top}
@@ -56,9 +55,10 @@ tr:last-child td{border-bottom:0}
 .bar .fill{height:100%;background:var(--accent);border-radius:7px}
 .bar .v{width:40px;text-align:right;font-variant-numeric:tabular-nums;font-size:14px}
 .chain{display:flex;flex-wrap:wrap;align-items:center;gap:6px;font-variant-numeric:tabular-nums}
+.chain{font-family:var(--mono)}
 .chain span{background:var(--card);border:1px solid var(--line);border-radius:8px;padding:6px 10px;font-weight:700}
 .chain i{font-style:normal;color:var(--muted);font-size:13px}
-.chain span.end{background:var(--accent);color:#fff;border-color:transparent}
+.chain span.end{background:var(--accent);color:#111;border-color:transparent}
 /* flow */
 .lanes-head,.phase{display:grid;grid-template-columns:96px 1fr 1fr;gap:10px}
 .lanes-head{font-size:13px;font-weight:700;color:var(--muted);padding-bottom:6px}
@@ -78,7 +78,7 @@ tr:last-child td{border-bottom:0}
 .tag.ok{background:var(--ok-bg);color:var(--ok)}
 ol.steps{padding-left:22px;margin:0}
 ol.steps li{margin-bottom:8px}
-blockquote{margin:0;padding:16px 20px;border-left:4px solid var(--accent);background:var(--card);border-radius:0 12px 12px 0;font-size:clamp(20px,3.6vw,28px);font-weight:700;line-height:1.45}
+blockquote{margin:0;padding:6px 0 6px 20px;border-left:4px solid var(--accent);background:none;border-radius:0 12px 12px 0;font-size:clamp(20px,3.6vw,28px);font-weight:700;line-height:1.45}
 .foot{margin-top:28px;font-size:13px;color:var(--muted)}
 .counter{position:fixed;right:16px;bottom:14px;font-size:13px;color:var(--muted);background:var(--card);border:1px solid var(--line);border-radius:999px;padding:4px 12px;font-variant-numeric:tabular-nums;z-index:5}
 @media (max-width:640px){
@@ -98,11 +98,11 @@ blockquote{margin:0;padding:16px 20px;border-left:4px solid var(--accent);backgr
 
 <!-- 1 封面 -->
 <section>
-  <div class="no">CASE STUDY｜2026.10.17–18</div>
+  <div class="no">Case Study · 2026.10.17–18</div>
   <h1>526 → <em>489</em></h1>
   <p class="lead">一場 UpNote 筆記背包的大整理</p>
   <p class="muted">526 篇陳年筆記，重新歸成 13 本＋1 本機敏隔離區。原話一字未改，建立日期全數保留。</p>
-  <p class="foot">璁導 × Claude｜姊妹篇：<a href="../yt-cleanup-case-study/" style="color:var(--accent)">961 → 273｜YouTube 的訂閱大掃除</a></p>
+  <p class="foot">璁導 × Claude｜系列：<a href="../yt-cleanup-case-study/" style="color:var(--accent)">961 → 273｜YouTube 的訂閱大掃除</a>　<a href="../skill-cleanup-case-study/" style="color:var(--accent)">27 → 23｜Claude Skill 大退潮</a></p>
 </section>
 
 <!-- 2 開場 -->
