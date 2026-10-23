@@ -1,0 +1,570 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>27 → 23｜Claude Skill 大盤點</title>
+<meta name="description" content="Case Study：模型變強、事業轉彎之後，一場 Claude Skill 的盤點與淘汰紀錄。抄本沒跟上母版，是這次的共同病根。">
+<style>
+:root{
+  --bg:#f6f4ef;--card:#ffffff;--ink:#1d1d1f;--muted:#6c6a66;--line:#e2dfd8;
+  --accent:#b5651d;--accent-bg:#f8ecdf;--me:#2f5d9a;--me-bg:#e8f0fa;
+  --ok:#3e7d4f;--ok-bg:#e7f3ea;--warn:#b3362f;--warn-bg:#fbeae8;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#151517;--card:#202024;--ink:#ededed;--muted:#9b9aa0;--line:#33333a;
+  --accent:#e59a55;--accent-bg:#2f2418;--me:#80a9e2;--me-bg:#1b2533;
+  --ok:#7cc08d;--ok-bg:#1a2a1f;--warn:#ef8a83;--warn-bg:#331f1e;}}
+:root[data-theme="dark"]{
+  --bg:#151517;--card:#202024;--ink:#ededed;--muted:#9b9aa0;--line:#33333a;
+  --accent:#e59a55;--accent-bg:#2f2418;--me:#80a9e2;--me-bg:#1b2533;
+  --ok:#7cc08d;--ok-bg:#1a2a1f;--warn:#ef8a83;--warn-bg:#331f1e;}
+*{box-sizing:border-box}
+html,body{margin:0;height:100%}
+body{background:var(--bg);color:var(--ink);font:16px/1.7 -apple-system,"PingFang TC","Noto Sans TC","Microsoft JhengHei",sans-serif;-webkit-font-smoothing:antialiased}
+main{height:100%;overflow-y:auto;scroll-snap-type:y proximity}
+section{min-height:100%;scroll-snap-align:start;display:flex;flex-direction:column;justify-content:center;padding:56px max(16px,env(safe-area-inset-left)) 72px;max-width:1000px;margin:0 auto}
+.no{font-size:14px;font-weight:700;letter-spacing:.12em;color:var(--accent);margin-bottom:6px}
+h1{font-size:clamp(44px,11vw,104px);line-height:1.05;margin:0 0 12px;font-weight:800;letter-spacing:-.02em}
+h1 em{font-style:normal;color:var(--accent)}
+h2{font-size:clamp(26px,5vw,40px);line-height:1.25;margin:0 0 18px}
+h2 em{font-style:normal;color:var(--accent)}
+p{margin:0 0 12px}
+.lead{font-size:clamp(18px,3vw,22px);color:var(--muted)}
+.muted{color:var(--muted)}
+small{font-size:13px}
+.grid{display:grid;gap:12px}
+.g2{grid-template-columns:repeat(auto-fit,minmax(240px,1fr))}
+.g3{grid-template-columns:repeat(auto-fit,minmax(180px,1fr))}
+.g4{grid-template-columns:repeat(auto-fit,minmax(150px,1fr))}
+.card{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:16px}
+.card b{display:block}
+.big{font-size:clamp(30px,5vw,44px);font-weight:800;line-height:1.1;font-variant-numeric:tabular-nums}
+.big.a{color:var(--accent)}
+.chat{display:flex;flex-direction:column;gap:10px;max-width:640px}
+.bubble{padding:12px 16px;border-radius:14px;background:var(--card);border:1px solid var(--line)}
+.bubble.u{align-self:flex-end;background:var(--accent-bg);border-color:transparent}
+.bubble .who{font-size:12px;font-weight:700;color:var(--muted);display:block;margin-bottom:2px}
+table{width:100%;border-collapse:collapse;background:var(--card);border:1px solid var(--line);border-radius:12px;overflow:hidden;font-size:15px}
+th,td{padding:9px 12px;border-bottom:1px solid var(--line);text-align:left;vertical-align:top}
+th{font-size:13px;color:var(--muted);font-weight:700}
+td.n{text-align:right;font-variant-numeric:tabular-nums;white-space:nowrap}
+tr:last-child td{border-bottom:0}
+.bar{display:flex;align-items:center;gap:10px;margin:6px 0}
+.bar .lab{width:140px;flex:none;font-size:14px}
+.bar .tr{flex:1;height:14px;background:var(--line);border-radius:7px;overflow:hidden}
+.bar .fill{height:100%;background:var(--accent);border-radius:7px}
+.bar .v{width:40px;text-align:right;font-variant-numeric:tabular-nums;font-size:14px}
+.chain{display:flex;flex-wrap:wrap;align-items:center;gap:6px;font-variant-numeric:tabular-nums}
+.chain span{background:var(--card);border:1px solid var(--line);border-radius:8px;padding:6px 10px;font-weight:700}
+.chain i{font-style:normal;color:var(--muted);font-size:13px}
+.chain span.end{background:var(--accent);color:#fff;border-color:transparent}
+/* flow */
+.lanes-head,.phase{display:grid;grid-template-columns:96px 1fr 1fr;gap:10px}
+.lanes-head{font-size:13px;font-weight:700;color:var(--muted);padding-bottom:6px}
+.lanes-head .y{color:var(--accent)}.lanes-head .m{color:var(--me)}
+.phase{padding:10px 0;border-top:1px solid var(--line)}
+.ph{font-weight:700;color:var(--ok);font-size:15px}
+.lane{display:flex;flex-direction:column;gap:6px}
+.step{background:var(--card);border:1px solid var(--line);border-left:4px solid var(--accent);border-radius:8px;padding:8px 10px;font-size:14px;line-height:1.5}
+.lane.m .step{border-left-color:var(--me)}
+.step b{display:block}.step small{color:var(--muted);display:block}
+.gate{grid-column:2 / 4;background:var(--ok-bg);color:var(--ok);border-radius:8px;padding:6px 10px;font-weight:600;font-size:14px}
+.lesson{grid-column:2 / 4;background:var(--warn-bg);border-left:4px solid var(--warn);border-radius:8px;padding:6px 10px;font-size:14px}
+.lesson b{color:var(--warn)}
+.tag{display:inline-block;font-size:12px;font-weight:700;padding:2px 8px;border-radius:999px;background:var(--accent-bg);color:var(--accent);margin-right:6px}
+.tag.me{background:var(--me-bg);color:var(--me)}
+.tag.warn{background:var(--warn-bg);color:var(--warn)}
+.tag.ok{background:var(--ok-bg);color:var(--ok)}
+ol.steps{padding-left:22px;margin:0}
+ol.steps li{margin-bottom:8px}
+blockquote{margin:0;padding:16px 20px;border-left:4px solid var(--accent);background:var(--card);border-radius:0 12px 12px 0;font-size:clamp(20px,3.6vw,28px);font-weight:700;line-height:1.45}
+.foot{margin-top:28px;font-size:13px;color:var(--muted)}
+.counter{position:fixed;right:16px;bottom:14px;font-size:13px;color:var(--muted);background:var(--card);border:1px solid var(--line);border-radius:999px;padding:4px 12px;font-variant-numeric:tabular-nums;z-index:5}
+@media (max-width:640px){
+  .lanes-head{display:none}
+  .phase{grid-template-columns:1fr}
+  .gate,.lesson{grid-column:1}
+  .lane::before{font-size:12px;font-weight:700}
+  .lane.y::before{content:"璁導";color:var(--accent)}
+  .lane.m::before{content:"Claude";color:var(--me)}
+  .bar .lab{width:104px}
+  table{font-size:14px}th,td{padding:8px}
+}
+
+
+a{color:var(--accent)}
+.foot a{margin-right:10px}
+.flow{display:flex;align-items:center;gap:18px;flex-wrap:wrap;margin-top:8px}
+.node.master{background:var(--accent);color:#fff;border-radius:12px;padding:14px 18px;font-weight:800;font-size:18px}
+.node small,.copy small{display:block;font-weight:400;font-size:13px;opacity:.85}
+.arrows{display:flex;flex-direction:column;gap:8px;border-left:2px dashed var(--line);padding-left:18px}
+.copy{background:var(--card);border:1px dashed var(--muted);border-radius:10px;padding:8px 14px;font-weight:700;color:var(--muted)}
+.tl{display:flex;flex-direction:column;border-left:2px solid var(--line);margin-left:60px}
+.tl-row{display:flex;align-items:center;gap:12px;padding:7px 0;position:relative}
+.tl-row .d{position:absolute;left:-62px;width:50px;text-align:right;font-size:13px;color:var(--muted);font-variant-numeric:tabular-nums}
+.tl-row .dot{width:10px;height:10px;border-radius:50%;background:var(--accent);margin-left:-6px;flex:none}
+.tl-row.gap{margin-top:28px}
+.tl-row.gap .dot{background:var(--warn)}
+.pipe{display:flex;flex-direction:column;align-items:center;gap:6px;margin-top:16px}
+.pipe>div:not(.p-split),.p-lane{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:10px 16px;font-weight:700;text-align:center}
+.pipe small{display:block;font-weight:400;font-size:13px;color:var(--muted)}
+.pipe .p-arrow{background:none!important;border:0!important;padding:0!important;color:var(--muted)}
+.pipe .p-raw{border:2px solid var(--accent)!important}
+.p-split{display:grid;grid-template-columns:1fr 1fr;gap:12px;width:100%}
+.p-lane.opt{border-style:dashed!important;color:var(--muted)}
+.p-lane.main{border-left:4px solid var(--accent)!important}
+.p-lane .p-arrow{display:block}
+.ph small{font-weight:400}
+@media (max-width:640px){.p-split{grid-template-columns:1fr}.tl{margin-left:56px}}
+</style>
+</head>
+<body>
+<main id="deck">
+
+<!-- 1 封面 -->
+<section>
+  <div class="no">CASE STUDY｜2026.10.23</div>
+  <h1>27 → <em>23</em></h1>
+  <p class="lead">一場 Claude Skill 的盤點與淘汰</p>
+  <p class="muted">模型長大了，事業也轉彎了。半年前寫給 AI 的說明書，有一半變成了負債。這份紀錄講的不是關了幾支，而是<b>一支 Skill 到底還該裝什麼</b>。</p>
+  <p class="foot">璁導 × Claude｜約 1.5 小時｜關閉 4 支、改版與接線 22 支<br>系列：<a href="../yt-cleanup-case-study/">961 → 273｜YouTube 的訂閱大掃除</a>　<a href="../upnote-cleanup-case-study/">526 → 489｜UpNote 背包大整理</a></p>
+</section>
+
+<!-- 2 開場 -->
+<section>
+  <div class="no">開場</div>
+  <h2>「我初期建立的，有些我覺得過時了。」</h2>
+  <div class="chat">
+    <div class="bubble u"><span class="who">璁導</span>大模型一直進步，你也到了 Opus 5.5 的迭代。我初期剛接觸 Skill 時建立了一些我覺得過時的，請幫我盤點哪些可以廢棄？哪些可以迭代？</div>
+    <div class="bubble"><span class="who">Claude</span>我先把你所有個人 Skill 逐支讀完，再對照使用紀錄和你現在的工作流，最後整理成一張決策板給你裁。</div>
+  </div>
+  <p class="muted" style="margin-top:16px">前兩篇是「東西太多，管不動」。這一篇不一樣：Skill 不多，但每一支都在<b>悄悄教錯 AI</b>。</p>
+</section>
+
+<!-- 3 名詞 -->
+<section>
+  <div class="no">先講清楚</div>
+  <h2>Skill 是什麼？<em>寫給 AI 的工作說明書</em></h2>
+  <div class="grid g3">
+    <div class="card"><b>一個資料夾</b><small class="muted">裡面一份說明檔，寫著「什麼時候叫我、照什麼步驟做、交出什麼格式」</small></div>
+    <div class="card"><b>聽到關鍵詞就啟動</b><small class="muted">例如說「抓字」，AI 就去讀那份說明，照做</small></div>
+    <div class="card"><b>母版放在 Notion</b><small class="muted">每支 Skill 在資產庫有一列：版本、用途、母版檔</small></div>
+  </div>
+  <p style="margin-top:16px">好處是不用每次重講一遍。壞處也在這裡：<b>說明書寫完就不會自己更新</b>，世界變了，它還照舊版本教 AI 做事。</p>
+</section>
+
+<!-- 4 起點 -->
+<section>
+  <div class="no">01　起點</div>
+  <h2>半年，27 支</h2>
+  <div class="grid g4">
+    <div class="card"><small class="muted">盤點範圍</small><div class="big">27</div><small>支，26 支自建＋1 支外部匯入</small></div>
+    <div class="card"><small class="muted">最早一支</small><div class="big">4/09</div><small>2026 年，剛接觸 Skill 的時候</small></div>
+    <div class="card"><small class="muted">各抄一份身份背景</small><div class="big a">7</div><small>支，其中 2 支還寫著舊口號</small></div>
+    <div class="card"><small class="muted">沒有版本列</small><div class="big a">19</div><small>支，看不出是哪一版</small></div>
+  </div>
+  <p class="muted" style="margin-top:16px">10 月新做的幾支都很健康。問題集中在 4 月到 8 月那一批：當時模型還沒那麼強，事業的骨架也還沒長好。</p>
+</section>
+
+<!-- 5 兩股力量 -->
+<section>
+  <div class="no">02　為什麼會過時</div>
+  <h2>兩股力量同時在推</h2>
+  <div class="grid g2">
+    <div class="card"><span class="tag me">模型變強了</span>
+      <ul style="margin:10px 0 0;padding-left:20px">
+        <li>標來源、查不到就說查不到，現在預設就會做</li>
+        <li>整理成段落、抓核心論點，一句提示詞就夠</li>
+        <li>內建「找 Skill」和多代理平行研究</li>
+        <li>工具改名：舊說明書叫的工具已經不存在</li>
+      </ul>
+      <p class="muted" style="margin-top:10px"><small>→ 說明書裡很多段落變成多餘的叮嚀</small></p>
+    </div>
+    <div class="card"><span class="tag">事業轉彎了</span>
+      <ul style="margin:10px 0 0;padding-left:20px">
+        <li>靈感冰箱從一頁筆記搬進資料庫</li>
+        <li>內容分層從「長片／短影音／圖文」換成新架構</li>
+        <li>逐字稿有了自己的家：Obsidian 的 _Transcript</li>
+        <li>決策方式改成「選擇題＋附建議」</li>
+      </ul>
+      <p class="muted" style="margin-top:10px"><small>→ 說明書裡的地址和流程，指向已經退役的地方</small></p>
+    </div>
+  </div>
+  <p style="margin-top:16px">第一股讓 Skill <b>太胖</b>，第二股讓 Skill <b>走錯路</b>。前者只是浪費，後者會靜靜地把東西寫進錯的地方。</p>
+</section>
+
+<!-- 6 結果 -->
+<section>
+  <div class="no">03　結果</div>
+  <h2>關 4 支，<em>動 22 支</em></h2>
+  <div class="grid g4">
+    <div class="card"><small class="muted">關閉</small><div class="big">4</div><small>支，27 → 23</small></div>
+    <div class="card"><small class="muted">改版或接線</small><div class="big a">22</div><small>支，其中 12 支判準一字不動</small></div>
+    <div class="card"><small class="muted">裁決點</small><div class="big">11</div><small>個，放在同一張決策板</small></div>
+    <div class="card"><small class="muted">推翻 AI 建議</small><div class="big">2</div><small>處，其餘 9 處照建議</small></div>
+  </div>
+  <div class="grid g3" style="margin-top:12px">
+    <div class="card"><b>Thread 文體</b><small class="muted">語感規則已被新的寫作母版取代，關閉</small></div>
+    <div class="card"><b>連環圖解</b><small class="muted">規格 3–5 格、配色舊，現在每次依題材手工判斷，關閉</small></div>
+    <div class="card"><b>外部匯入的「找 Skill」</b><small class="muted">模型已內建，而且它會主動推薦，跟使用習慣相衝，關閉</small></div>
+  </div>
+  <p class="muted" style="margin-top:12px">第 4 支是 A-學習筆記，它的故事最長，後面單獨講。</p>
+</section>
+
+<!-- 7 代號說明 -->
+<section>
+  <div class="no">04　閱讀說明</div>
+  <h2>有些用真名，<em>有些用代號</em></h2>
+  <p>這次動到的 Skill 裡，有一部分是人設諮詢的工作流程，屬於營業配方。這幾支在本文用固定代號，只講病灶和版本，不講內容。</p>
+  <table>
+    <tr><th>名稱</th><th>職能</th><th>本文怎麼寫</th></tr>
+    <tr><td><b>A-學習筆記</b></td><td>把長內容整理成中性筆記</td><td>真名，完整寫</td></tr>
+    <tr><td><b>抓字／聽字</b></td><td>把影片、錄音變成逐字稿（一對雙胞胎）</td><td>真名，完整寫</td></tr>
+    <tr><td><b>黑金排版</b></td><td>所有 Word 交付物的排版規格</td><td>真名，完整寫</td></tr>
+    <tr><td><span class="tag">X</span></td><td>客戶訪談前的準備工具</td><td>代號，只講病灶</td></tr>
+    <tr><td><span class="tag">Y</span></td><td>選題的上游容器</td><td>代號，只講病灶</td></tr>
+    <tr><td><span class="tag">Z</span></td><td>靈感的快速收納</td><td>代號，只講病灶</td></tr>
+  </table>
+  <p class="muted" style="margin-top:12px"><small>其餘有動到的，只出現在數量裡。</small></p>
+</section>
+
+<!-- 8 病灶 -->
+<section>
+  <div class="no">05　病灶</div>
+  <h2>抄本沒跟上<em>母版</em></h2>
+  <p>早期寫 Skill 的習慣是「把需要的東西都抄一份進來」：身份背景、語感規則、排版配色、欄位定義。當下很方便，每支都能獨立跑。</p>
+  <div class="flow">
+    <div class="node master">母版<small>持續長大：v1 → v2 → v3</small></div>
+    <div class="arrows">
+      <div class="copy">抄本 A<small>停在 v1</small></div>
+      <div class="copy">抄本 B<small>停在 v1</small></div>
+      <div class="copy">抄本 C<small>停在 v2</small></div>
+    </div>
+  </div>
+  <p style="margin-top:16px">問題是母版會長大，抄本不會。半年後，同一件事在系統裡有好幾個版本，<b>AI 讀到哪一份就照哪一份做</b>。</p>
+  <p class="muted">這種錯不會報錯。它只會默默做出「看起來合理、其實過期」的東西。</p>
+</section>
+
+<!-- 9 三個案例 -->
+<section>
+  <div class="no">06　病例</div>
+  <h2>三支 Skill，<em>同一個病</em></h2>
+  <div class="grid g3">
+    <div class="card"><span class="tag">Z</span><b style="margin-top:8px">寫進退役的冰箱</b><p class="muted" style="margin:6px 0 0"><small>冰箱 10/08 搬進資料庫，另一支 Skill 10/18 已經改接，Z 沒跟上。每次「收進冰箱」，都寫到已經沒人看的舊頁面。</small></p><p style="margin:8px 0 0"><small><b>v2 → v2.1</b></small></p></div>
+    <div class="card"><span class="tag">Y</span><b style="margin-top:8px">找錯欄位</b><p class="muted" style="margin:6px 0 0"><small>Y 要從一張核心卡片讀資料，但那張卡的欄位後來重新編號。Y 照舊號碼去找，結果永遠標「待定」，而且不會報錯。</small></p><p style="margin:8px 0 0"><small><b>→ v0.2</b></small></p></div>
+    <div class="card"><span class="tag">X</span><b style="margin-top:8px">用舊問卷</b><p class="muted" style="margin:6px 0 0"><small>X 檔案裡附的是半年前的問卷，現行版已經改了兩次。另外有兩張「待整合」的改進單，掛在資料庫裡沒人併。</small></p><p style="margin:8px 0 0"><small><b>v2.0 → v3.0</b>（整支重寫）</small></p></div>
+  </div>
+  <p style="margin-top:16px">這三個錯，任何一個都要等到某天交付出問題才會被發現。盤點的價值在這裡：<b>趁還沒出事前，一次把抄本對回母版</b>。</p>
+</section>
+
+<!-- 10 解法：一件事一個母版 -->
+<section>
+  <div class="no">07　解法</div>
+  <h2>一件事，<em>只有一份母版</em></h2>
+  <p>改版時一律照這條：每件事只留一份母版，其他 Skill 寫明「以哪份為準」，不再自己抄。</p>
+  <table>
+    <tr><th>這件事</th><th>以誰為準</th></tr>
+    <tr><td>文章的語感</td><td>寫作語體母版</td></tr>
+    <tr><td>Word 文件長什麼樣</td><td><b>黑金排版</b></td></tr>
+    <tr><td>核心卡片的欄位</td><td>那張卡片的 Skill 本身</td></tr>
+    <tr><td>寫給客戶的訊息</td><td>客戶訊息產生器</td></tr>
+  </table>
+  <div class="card" style="margin-top:14px"><span class="tag ok">示範：黑金排版</span>
+    <p style="margin:8px 0 0">訪談企劃那支 Skill 原本夾帶一份排版參考檔，裡面的配色和小工具，是黑金排版附錄的<b>舊抄本</b>。這次刪到只剩它獨有的「自動編號」一段，其餘一句話指回黑金排版。</p>
+    <p class="muted" style="margin:6px 0 0"><small>黑金排版自己也只改了一行：範例程式寫死的舊輸出路徑。<b>v1.0 → v1.0.1</b></small></p>
+  </div>
+  <p class="muted" style="margin-top:12px">指向的是 Notion 上的母版，不是 AI 的記憶。換一個模型來跑，也找得到同一份。</p>
+</section>
+
+<!-- 11 四個判準 -->
+<section>
+  <div class="no">08　淘汰的判準</div>
+  <h2>每支 Skill 過<em>四道篩</em></h2>
+  <div class="grid g2">
+    <div class="card"><span class="tag me">1</span><b style="margin-top:6px">模型已經內建了嗎？</b><small class="muted">內建的就不用再教。例：外部匯入的「找 Skill」</small></div>
+    <div class="card"><span class="tag me">2</span><b style="margin-top:6px">被新的 Skill 取代了嗎？</b><small class="muted">兩套規則並存會打架。例：Thread 文體 vs 新寫作母版</small></div>
+    <div class="card"><span class="tag">3</span><b style="margin-top:6px">接線還對嗎？</b><small class="muted">地址、欄位、工具名有沒有過期。例：X、Y、Z</small></div>
+    <div class="card"><span class="tag">4</span><b style="margin-top:6px">守規矩了嗎？</b><small class="muted">版本列、檔尾格式。例：19 支補上「版本｜日期」</small></div>
+  </div>
+  <p style="margin-top:16px">前兩道問的是<b>還要不要存在</b>，後兩道問的是<b>存在的話對不對</b>。結果：</p>
+  <div class="chain"><span>27 支</span><i>＝ 關閉</i><span>4</span><i>＋ 改內容</i><span>9</span><i>＋ 只改接線與版本列</i><span>12</span><i>＋ 不用動</i><span class="end">2</span></div>
+  <p class="muted" style="margin-top:8px"><small>每一支都逐份讀完全文，沒有只看標題判斷。這是從 UpNote 那次學到的。</small></p>
+</section>
+
+<!-- 12 決策板 -->
+<section>
+  <div class="no">09　裁決的介面</div>
+  <h2>11 個裁決點，<em>一張板</em></h2>
+  <p>沒有一題一題問。全部放在同一張網頁決策板上，每項寫明「為什麼」、列出選項、預先標好 AI 的建議。點一下就存檔。</p>
+  <div class="grid g3">
+    <div class="card"><b>廢棄 4 項</b><small class="muted">含資料庫裡 3 列沒有實體檔的空殼</small></div>
+    <div class="card"><b>迭代 6 項</b><small class="muted">依優先序排：寫錯地方的排最前面</small></div>
+    <div class="card"><b>批次小修 1 項</b><small class="muted">19 支只改版本列和接線，授權一次做完</small></div>
+  </div>
+  <p style="margin-top:16px">另外 14 支列在最下面「不用裁」，附一句保留理由。讀者不需要的東西，不佔決策力。</p>
+  <p class="muted">開場 15:09 決策板上線，15:34 回一句「裁完了」。25 分鐘裁完半年的累積。</p>
+</section>
+
+<!-- 13 被推翻的兩處 -->
+<section>
+  <div class="no">10　人推翻 AI 的地方</div>
+  <h2>建議是建議，<em>裁決是裁決</em></h2>
+  <div class="grid g2">
+    <div class="card"><span class="tag warn">推翻 1</span>
+      <p style="margin:8px 0 4px"><b>Thread 文體</b></p>
+      <p class="muted" style="margin:0"><small>AI 建議：關掉，但把格式（幾則、每則幾字、首則鉤子）併進寫作母版，當一種文體保留。</small></p>
+      <p style="margin:8px 0 0"><small>璁導裁：<b>直接廢棄，格式不保留。</b></small></p>
+    </div>
+    <div class="card"><span class="tag warn">推翻 2</span>
+      <p style="margin:8px 0 4px"><b>Z 的去向清單</b></p>
+      <p class="muted" style="margin:0"><small>AI 建議：改接新冰箱，清單照確認結果更新。</small></p>
+      <p style="margin:8px 0 0"><small>璁導裁：<b>補一條新去向，再多刪兩條</b>已經不做的產品線。</small></p>
+    </div>
+  </div>
+  <p style="margin-top:16px">兩次推翻都是同一個方向：<b>比 AI 砍得更兇</b>。AI 傾向「保留一點以防萬一」，人知道哪些萬一不會發生。</p>
+  <p class="muted"><small>兩次推翻都記進「裁決差分庫」，下次 AI 給建議時會參考。</small></p>
+</section>
+
+<!-- 14 主角：A-學習筆記 -->
+<section>
+  <div class="no">11　主角登場</div>
+  <h2>A-學習筆記：<em>升級一小時後被廢掉</em></h2>
+  <p>決策板上，A-學習筆記原本被判「迭代」：抓字和聽字會把逐字稿交接過來，但它不認得交接包的格式。下午照建議升到 <b>v3.1</b>，加了交接入口，裝好了。</p>
+  <div class="chat" style="margin-top:6px">
+    <div class="bubble u"><span class="who">璁導</span>A-學習筆記是一個非常通用的使用需求，有需要再下提示詞即可。請分析過去的使用頻率以及存在的必要性。</div>
+  </div>
+  <p style="margin-top:16px">這一問把題目換了：不是「它還對不對」，而是<b>「它還需不需要是一支 Skill」</b>。</p>
+</section>
+
+<!-- 15 使用頻率 -->
+<section>
+  <div class="no">12　使用頻率</div>
+  <h2>七週沒被叫過一次</h2>
+  <div class="tl">
+    <div class="tl-row"><span class="d">04-17</span><span class="dot"></span><span>一場 AI 領域人物的長訪談</span></div>
+    <div class="tl-row"><span class="d">08-23</span><span class="dot"></span><span>一支產品起源影片（順手大改版）</span></div>
+    <div class="tl-row"><span class="d">08-25</span><span class="dot"></span><span>兩支講產品市場契合的影片</span></div>
+    <div class="tl-row"><span class="d">08-26</span><span class="dot"></span><span>一位 AI 研究者的專訪</span></div>
+    <div class="tl-row"><span class="d">09-03</span><span class="dot"></span><span>同一位研究者的論文</span></div>
+    <div class="tl-row gap"><span class="d">10-23</span><span class="dot"></span><span><b>七週空白</b></span></div>
+  </div>
+  <p style="margin-top:16px">對話紀錄裡實際叫出它 6 次，最後一次是 9/03。之後處理外部內容，改走另外三條路：</p>
+  <div class="grid g3">
+    <div class="card"><b>Z｜靈感的快速收納</b><small class="muted">先判斷收不收</small></div>
+    <div class="card"><b>抓字／聽字</b><small class="muted">把逐字稿原樣存起來</small></div>
+    <div class="card"><b>肢解</b><small class="muted">只拆接得上自己理論的零件</small></div>
+  </div>
+  <p class="muted" style="margin-top:12px">8 月那幾次，做完筆記後的下一句幾乎都是「拆哪些可以入庫」。現在肢解一步就做完了。</p>
+</section>
+
+<!-- 16 必要性 -->
+<section>
+  <div class="no">13　存在的必要性</div>
+  <h2>拆開來看，<em>只剩一顆零件獨特</em></h2>
+  <table>
+    <tr><th>它裝了什麼</th><th>現在誰在做</th></tr>
+    <tr><td>不套視角、不下判斷</td><td>已寫進長期偏好，任何對話都生效</td></tr>
+    <tr><td>整理成段落、抓核心論點</td><td>模型本來就會，一句「整理成筆記，不帶立場」</td></tr>
+    <tr><td>觀察最多兩個</td><td>一句提示詞就能交代</td></tr>
+    <tr><td><b>查證標記</b>（✅事實／⚠️待查證／🔜路線圖）</td><td><b>搬進投影片大綱</b>：它吃這三個標記，自動長出「上台前提醒」</td></tr>
+  </table>
+  <div class="chat" style="margin-top:16px">
+    <div class="bubble u"><span class="who">璁導</span>廢棄。</div>
+  </div>
+  <p class="muted" style="margin-top:12px">廢掉之前先把唯一獨特的零件搬家，再拔掉三支 Skill 裡「產筆記交給 A-學習筆記」那一行。下午剛做的 v3.1 一起作廢，沒有捨不得。</p>
+</section>
+
+<!-- 17 鏈路 -->
+<section>
+  <div class="no">14　鏈路重整</div>
+  <h2>學習筆記和肢解，<em>是並排的兩條路</em></h2>
+  <div class="chat">
+    <div class="bubble u"><span class="who">璁導</span>目前的逐字稿 › Obsidian｜學習筆記 › 當場閱讀後看怎麼運用｜肢解郵輪 › 裁 › Notion，這樣對嗎？</div>
+    <div class="bubble"><span class="who">Claude</span>大致對，只有一處要修：學習筆記和肢解不是前後相接，是並排的。</div>
+  </div>
+  <div class="pipe">
+    <div class="p-src">YT／錄音<small>抓字・聽字</small></div>
+    <div class="p-arrow">↓</div>
+    <div class="p-raw">逐字稿<small>唯一要留的原料</small></div>
+    <div class="p-split">
+      <div class="p-lane opt">學習筆記<small>看懂用・需要時一句提示詞・用完不存</small></div>
+      <div class="p-lane main">肢解<small>直接讀逐字稿・照抄原句・標時間點</small><span class="p-arrow">↓</span><b>裁 → Notion</b></div>
+    </div>
+  </div>
+  <p class="muted" style="margin-top:14px">肢解不能吃筆記：筆記已經重組過、也沒有時間碼，從筆記拆會失真。所以筆記只是決定要不要肢解之前的選配步驟，不在主線上。</p>
+</section>
+
+<!-- 18 抓字聽字 -->
+<section>
+  <div class="no">15　接線跟著改</div>
+  <h2>抓字／聽字：<em>只產字，不產筆記</em></h2>
+  <table>
+    <tr><th></th><th>改版前</th><th>改版後</th></tr>
+    <tr><td><b>抓字</b></td><td>v1.3｜交接包寫明「產筆記交給 A-學習筆記」</td><td><b>v1.3.1</b>｜不產筆記（要看懂內容時另外請 Claude 整理）</td></tr>
+    <tr><td><b>聽字</b></td><td>v1.2｜同上</td><td><b>v1.2.1</b>｜同上</td></tr>
+    <tr><td>肢解</td><td>邊界表有一列指向 A-學習筆記</td><td>「不走 Skill，直接請 Claude 整理」</td></tr>
+    <tr><td>投影片大綱</td><td>吃 A-學習筆記的輸出</td><td>自帶查證標記定義，吃「帶查證標記的筆記」</td></tr>
+  </table>
+  <p style="margin-top:16px">一支 Skill 關掉，牽動四支接線。如果只按「關閉」不改接線，抓字會繼續叫一個已經不在的同事。</p>
+  <p class="muted"><small>改版號只升第三位：判準一字不動，只改接線。版本號跟著外部狀態走，不跟內部改了幾次走。</small></p>
+</section>
+
+<!-- 19 流程分工 上 -->
+<section>
+  <div class="no">16　流程分工（上）</div>
+  <h2>誰做什麼：盤點 → 裁決 → 改版</h2>
+  <div class="lanes-head"><div>階段</div><div class="y">璁導</div><div class="m">Claude</div></div>
+  <div class="phase">
+    <div class="ph">A 盤點<br><small class="muted">14:58</small></div>
+    <div class="lane y"><div class="step"><b>一句話開題</b><small>哪些廢棄、哪些迭代</small></div></div>
+    <div class="lane m"><div class="step"><b>27 支逐份讀全文</b><small>對照使用紀錄、Notion 資產庫、記憶裡的工作流</small></div><div class="step"><b>找共同病根</b><small>7 支抄了身份背景，抄本沒跟上母版</small></div></div>
+  </div>
+  <div class="phase">
+    <div class="ph">B 裁決<br><small class="muted">15:09</small></div>
+    <div class="lane y"><div class="step"><b>一張板裁完 11 項</b><small>9 項照建議，2 項推翻</small></div><div class="step"><b>補答 4 題選擇題</b><small>X 的現場題放哪、問卷要不要另開單</small></div></div>
+    <div class="lane m"><div class="step"><b>做決策板</b><small>每項附理由、選項、建議，點選即存</small></div></div>
+    <div class="gate">✅ 15:34「裁完了」</div>
+  </div>
+  <div class="phase">
+    <div class="ph">C 改版</div>
+    <div class="lane y"><div class="step"><b>不逐支請示</b><small>批次小修授權一次做完</small></div></div>
+    <div class="lane m"><div class="step"><b>改 19 支、打包成安裝檔</b><small>每支第一行補「版本｜日期」</small></div><div class="step"><b>Notion 同步</b><small>資產庫狀態、演化日誌、裁決差分庫、戰情看板</small></div></div>
+    <div class="lesson"><b>修正：</b>AI 一度說某支 Skill 的配色「過時」，其實那是現行的視覺識別。讀內容要對照現況，不能只看日期。</div>
+  </div>
+</section>
+
+<!-- 20 流程分工 下 -->
+<section>
+  <div class="no">17　流程分工（下）</div>
+  <h2>誰做什麼：安裝 → 二次淘汰 → 結案</h2>
+  <div class="lanes-head"><div>階段</div><div class="y">璁導</div><div class="m">Claude</div></div>
+  <div class="phase">
+    <div class="ph">D 安裝<br><small class="muted">15:56</small></div>
+    <div class="lane y"><div class="step"><b>「授權開代理交給你做」</b></div></div>
+    <div class="lane m"><div class="step"><b>操作瀏覽器上傳 19 支</b><small>上傳 → 逐支「取代」→ 確認</small></div><div class="step"><b>關閉 3 支</b><small>按「關閉」，不按「移除」</small></div></div>
+    <div class="gate">✅ 19 支新版上線，舊版留在版本歷史</div>
+  </div>
+  <div class="phase">
+    <div class="ph">E 二次淘汰<br><small class="muted">16:22 裁</small></div>
+    <div class="lane y"><div class="step"><b>重新提問 A-學習筆記</b><small>需要是 Skill 嗎？</small></div><div class="step"><b>釐清鏈路、裁「廢棄」</b></div></div>
+    <div class="lane m"><div class="step"><b>查 6 次使用紀錄</b><small>拆功能，找出唯一獨特的零件</small></div><div class="step"><b>零件搬家、改 5 支接線、再裝一次</b></div></div>
+  </div>
+  <div class="phase">
+    <div class="ph">F 結案<br><small class="muted">16:31</small></div>
+    <div class="lane y"><div class="step"><b>兩件留給本人</b><small>永久移除 4 支；允許代理開 Notion</small></div></div>
+    <div class="lane m"><div class="step"><b>戰情看板只留未結的</b><small>母版附件同步、問卷下一版另開單</small></div></div>
+  </div>
+</section>
+
+<!-- 21 關閉 vs 移除 -->
+<section>
+  <div class="no">18　AI 不按的按鈕</div>
+  <h2>「關閉」和「移除」，<em>差一個永久</em></h2>
+  <div class="grid g2">
+    <div class="card"><span class="tag ok">關閉</span><p style="margin:8px 0 0">Skill 還在清單上，只是不會被叫出來。隨時打開就回來。</p><p class="muted" style="margin:6px 0 0"><small>AI 代理可以按。</small></p></div>
+    <div class="card"><span class="tag warn">移除</span><p style="margin:8px 0 0">連同版本歷史一起刪掉，回不來。</p><p class="muted" style="margin:6px 0 0"><small>留給本人按，什麼時候按都可以。</small></p></div>
+  </div>
+  <p style="margin-top:16px">安裝也一樣：用「上傳並取代」，而不是先刪再裝。每支的舊版都留在版本歷史裡，發現新版有問題，一鍵就退得回去。</p>
+  <p class="muted">跟 UpNote 那次「舊版進垃圾桶，不直接刪」是同一條原則：<b>AI 做的每一步都要能反悔</b>。</p>
+</section>
+
+<!-- 22 踩坑 -->
+<section>
+  <div class="no">19　踩過的坑</div>
+  <h2>還卡著的，和下次可以少走的</h2>
+  <div class="grid g2">
+    <div class="card"><b>Notion 的母版附件換不了</b><small class="muted">工作區的網路白名單擋下了 Notion 的上傳端點；瀏覽器代理也還沒獲准開 Notion。照規則不繞路，球交回本人</small></div>
+    <div class="card"><b>版本欄和實際安裝對不上</b><small class="muted">資料庫寫 v1.0，實際裝的是 v2。所以順序是：先裝好，再改 Notion 版本欄</small></div>
+    <div class="card"><b>資料庫裡有空殼</b><small class="muted">3 列「待重構」兩個半月沒有對應檔案，一起封存</small></div>
+    <div class="card"><b>剛升級就廢掉</b><small class="muted">A-學習筆記先迭代、再淘汰。下次先問「還要不要是 Skill」，再問「哪裡要改」</small></div>
+    <div class="card"><b>畫面還沒載完就點</b><small class="muted">第一次點 Skills 設定落空，等面板出現再點</small></div>
+    <div class="card"><b>改一支，牽四支</b><small class="muted">關閉不是結束，要順著接線找出所有叫它的地方</small></div>
+  </div>
+</section>
+
+<!-- 23 Skill 該裝什麼 -->
+<section>
+  <div class="no">20　這次真正的答案</div>
+  <h2>Skill 只該裝<em>模型不知道的東西</em></h2>
+  <div class="grid g2">
+    <div class="card"><span class="tag me">交給模型</span>
+      <ul style="margin:10px 0 0;padding-left:20px">
+        <li>怎麼整理、怎麼摘要</li>
+        <li>標來源、不腦補</li>
+        <li>通用的寫作與排版常識</li>
+        <li>找工具、平行查資料</li>
+      </ul>
+      <p class="muted" style="margin-top:10px"><small>模型每升一級，這一欄就變長</small></p>
+    </div>
+    <div class="card"><span class="tag">留在 Skill</span>
+      <ul style="margin:10px 0 0;padding-left:20px">
+        <li>你的理論與判準</li>
+        <li>你的流程與交接順序</li>
+        <li>你的地址：資料存在哪、交給誰</li>
+        <li>你過去的裁決</li>
+      </ul>
+      <p class="muted" style="margin-top:10px"><small>事業每轉一個彎，這一欄就要更新</small></p>
+    </div>
+  </div>
+  <p style="margin-top:16px">所以盤點要做兩件相反的事：<b>左欄越長，Skill 越要瘦身；右欄一變，Skill 就要改接線。</b></p>
+</section>
+
+<!-- 24 三案對照 -->
+<section>
+  <div class="no">21　系列對照</div>
+  <h2>YT、UpNote、Skill</h2>
+  <table>
+    <tr><th></th><th>YT 訂閱</th><th>UpNote 背包</th><th>Skill 盤點</th></tr>
+    <tr><td>規模</td><td>961 → 273</td><td>526 → 489</td><td>27 → 23</td></tr>
+    <tr><td>動作</td><td><b>砍</b></td><td><b>歸位</b></td><td><b>對回母版</b></td></tr>
+    <tr><td>問題本質</td><td>太多</td><td>太亂</td><td>過期，而且不報錯</td></tr>
+    <tr><td>人要做的</td><td>922 個品味勾選</td><td>十幾個方向裁決</td><td>11 個裁決點＋1 次重新提問</td></tr>
+    <tr><td>AI 讀了什麼</td><td>頻道名稱與縮圖</td><td>筆記內文（機敏除外）</td><td>27 份說明書全文</td></tr>
+    <tr><td>執行</td><td>代理在瀏覽器退訂</td><td>代理操作 Mac 匯入</td><td>代理在瀏覽器安裝</td></tr>
+    <tr><td>最關鍵的一刀</td><td>人做的</td><td>人抽查抓到的</td><td>人重新提問砍的</td></tr>
+  </table>
+</section>
+
+<!-- 25 模式 -->
+<section>
+  <div class="no">22　可以帶走的模式</div>
+  <h2>給自己的 AI 說明書<em>做季度體檢</em></h2>
+  <ol class="steps">
+    <li><b>逐份讀全文：</b>不看標題、不看日期，看內容和現況對不對得上</li>
+    <li><b>先問要不要存在：</b>模型內建了嗎？被取代了嗎？用了幾次、最後一次是什麼時候？</li>
+    <li><b>再問對不對：</b>地址、欄位、工具名、流程交接，逐條對回母版</li>
+    <li><b>一張板裁完：</b>每項附 AI 建議，人只裁方向，批次小修整包授權</li>
+    <li><b>廢之前先搬零件：</b>找出唯一獨特的那顆，搬到該在的地方</li>
+    <li><b>順著接線改：</b>關掉一支，找出所有叫它的地方</li>
+    <li><b>可反悔地執行：</b>取代而不是刪除，關閉而不是移除</li>
+  </ol>
+  <p class="muted" style="margin-top:12px">適用：AI 的自訂指令、提示詞庫、團隊 SOP、任何「寫好就放著」的規則文件。</p>
+</section>
+
+<!-- 26 結語 -->
+<section>
+  <div class="no">結語</div>
+  <blockquote>模型越強，說明書越該短。<br>事業越清楚，說明書越該準。</blockquote>
+  <p class="foot">紀錄：璁導（李孟璁）｜協作：Claude｜2026.10.23<br>系列：<a href="../yt-cleanup-case-study/">961 → 273｜YouTube 的訂閱大掃除</a>　<a href="../upnote-cleanup-case-study/">526 → 489｜UpNote 背包大整理</a></p>
+</section>
+
+</main>
+<div class="counter" id="ct">1 / 26</div>
+
+<script>
+(function(){
+  var deck=document.getElementById('deck'),secs=[].slice.call(deck.querySelectorAll('section')),ct=document.getElementById('ct'),cur=0;
+  function show(){ct.textContent=(cur+1)+' / '+secs.length;}
+  var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting&&e.intersectionRatio>0.5){cur=secs.indexOf(e.target);show();}});},{root:deck,threshold:[0.5]});
+  secs.forEach(function(s){io.observe(s);});
+  function go(i){i=Math.max(0,Math.min(secs.length-1,i));secs[i].scrollIntoView({behavior:'smooth'});}
+  document.addEventListener('keydown',function(e){
+    if(['ArrowRight','PageDown',' '].indexOf(e.key)>-1){e.preventDefault();go(cur+1);}
+    else if(['ArrowLeft','PageUp'].indexOf(e.key)>-1){e.preventDefault();go(cur-1);}
+  });
+  show();
+})();
+</script>
+</body>
+</html>
