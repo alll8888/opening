@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>製片提示詞｜璁導</title>
+<style>
+:root{--bg:#0e0e0e;--card:#171717;--fg:#ece7db;--dim:#9A9A9A;--gold:#E8B200;--line:#2b2b2b}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--fg);font:16px/1.65 -apple-system,"PingFang TC","Noto Sans TC",sans-serif;padding:24px 18px 80px;max-width:760px;margin-inline:auto}
+h1{font-size:22px;margin:0 0 4px}h1 b{color:var(--gold)}
+.sub{color:var(--dim);font-size:13px;margin-bottom:18px}
+ol.how{margin:0 0 18px;padding-left:20px;font-size:14px;color:var(--fg)}
+ol.how li{margin:4px 0}
+.btn{display:block;width:100%;background:var(--gold);color:#000;border:0;border-radius:10px;padding:14px;font-size:16px;font-weight:700;margin:10px 0 16px}
+.btn:active{opacity:.85}
+pre{white-space:pre-wrap;background:var(--card);border:1px solid var(--line);border-radius:12px;padding:16px;font:14px/1.6 "PingFang TC","Noto Sans TC",sans-serif;color:var(--fg)}
+pre b{color:var(--gold)}
+pre i{color:#F4DC8A;font-style:normal}
+.tip{margin-top:18px;border-left:3px solid var(--gold);padding:8px 12px;background:#141414;font-size:14px;color:var(--dim)}
+.foot{margin-top:28px;font-size:12px;color:var(--dim)}
+</style>
+</head>
+<body>
+<h1>製片提示詞<b>｜AI 倫理短影音工作坊</b></h1>
+<div class="sub">璁導 李孟璁 ｜ 腳本有了，再用這套算「拍不拍得出來」。填括號，整段貼給任何 AI。</div>
+<ol class="how">
+<li>按「複製提示詞」。</li>
+<li>貼到 ChatGPT／Claude／Gemini 任一個。</li>
+<li>把〈資源〉六個括號照實填，沒有就寫沒有；腳本貼在最後。</li>
+<li>AI 每一步會給 2–3 個方案——<b>選那個你們這週真的做得到的。</b></li>
+</ol>
+<button class="btn" id="copy">複製提示詞</button>
+<pre id="p"><b>【角色與協作規則】</b>
+你是一位執行製片，專門用一支手機、自然光、三個人以內，在校園裡拍出 5 分鐘短片。
+你的工作不是改故事，是把故事變成「這一組、這一週、這些東西」拍得出來的計畫。
+請一步一步引導我，每次只處理一個環節，每個環節給我 2–3 個方案讓我選，每個方案註明代價（少了什麼）。
+不要一次寫完整份計畫。資訊不足時先問我，不要自己補。
+
+<b>【製片鐵律｜請嚴格遵守】</b>
+1. 器材只有手機＋我填的東西。沒填的就當沒有。
+2. 場景最多 3 個，演員最多 3 人，一天拍完。超過就壓縮：先砍場景、再砍人、最後才砍戲。
+3. 「縫的那顆鏡頭」不准砍：那是主角在兩股原力之間做選擇的那一刻，我會在腳本裡標 ★。其他都能讓，這個不能。
+4. 兩難要拍在看得到的物件或動作上。每一段都問我：觀眾看到了什麼東西、誰做了什麼動作？看不到的就改成看得到的。
+5. 對白能收音才算對白。走廊、餐廳、室外風大的地方，對白改成動作、字幕或事後配音。
+6. 每個鏡頭給一個備案：場地借不到、演員沒來、下雨，改怎麼拍。
+
+<b>【資源】</b>
+我們有<i>（人數＋誰能演、誰能拍）</i>。
+能用的場地<i>（校園內外都算，寫真的能進去的）</i>。
+器材<i>（手機型號＋有沒有腳架、耳機麥克風、補光）</i>。
+可拍攝的時間<i>（哪幾天、各幾小時）</i>。
+道具<i>（手上現成的，不用買的）</i>。
+不能做的事<i>（學校規定、沒有拍攝許可的地方）</i>。
+
+<b>【流程】</b>
+第一步　讀完腳本後先列：需要幾個場景、幾個人、幾樣道具、哪幾句對白必須收到音。一張表，不要解釋。
+第二步　對照〈資源〉，指出哪裡超過鐵律，給 2–3 種壓縮方案，每個寫清楚砍了什麼、★ 有沒有保住。
+第三步　我選定方案後，產出鏡頭表：每一段寫〔場景｜誰｜做什麼動作｜景別｜手機怎麼拿（手持／靠牆／腳架）｜收音方式｜備案〕。5 分鐘以內，鏡頭數 20 顆以內。
+第四步　產出一天拍攝日程：按場景排、不按劇情順序；同一場景一次拍完；自然光好的時段給外景。
+第五步　列出：哪些環節會用到 AI（片尾要揭露）；拍攝當天最可能出錯的三件事和對策。
+
+<b>【腳本】</b>
+<i>（把你們的腳本或四段式貼在這裡：目標／阻礙／努力／結果，並在「縫的那顆鏡頭」前面標 ★）</i></pre>
+<div class="tip">口訣：先砍場景、再砍人、最後砍戲；縫不能砍。</div>
+<div class="foot"><a href="qr.html" style="color:#9A9A9A">投影用 QR 頁</a> ｜ 接在 <a href="../dilemma-prompt/" style="color:#9A9A9A">兩難腳本提示詞</a> 後面用：先有兩難角色，再算拍不拍得出來。 © 璁導 李孟璁</div>
+<script>
+document.getElementById('copy').onclick=async function(){const t=document.getElementById('p').innerText;try{await navigator.clipboard.writeText(t);this.textContent='已複製 ✓ 去貼給 AI';}catch(e){const r=document.createRange();r.selectNodeContents(document.getElementById('p'));const s=getSelection();s.removeAllRanges();s.addRange(r);this.textContent='請長按選取後複製';}};
+</script>
+</body>
+</html>
